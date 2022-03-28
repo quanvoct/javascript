@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tính tổng các số trong khoảng a-b</title>
+  </head>
+  <body>
+    <script>
+      let first   = parseInt(prompt("Nhập số thứ nhất:", 0));
+      let second  = parseInt(prompt("Nhập số thứ hai:", 0));
+      let a,b,sum = 0;
+      if (first >= second) {
+        a = second; b = first;
+      } else {
+        a = first; b = second;
+      }
+      for (let i = a+1; i < b; i++) {
+        sum += i;
+      }
+      alert('Tổng các số từ first đến second là: '+ sum);
+    </script>
+  </body>
+</html>

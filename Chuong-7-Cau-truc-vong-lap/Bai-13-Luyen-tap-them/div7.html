@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>In dãy số FIBONACCI</title>
+</head>
+
+<body>
+    <script>
+        let sum = 0;
+        for (let i = 0, count = 0; i >= 0; i++) {
+            if (i % 7 == 0) {
+                console.log(i);
+                sum += i;
+                count++;
+                if (count == 30) break;
+            }
+        }
+        document.write('30 số đầu tiên trong dãy số tự nhiên chia hết cho 7 có tổng là: ' +sum);
+    </script>
+</body>
+
+</html>

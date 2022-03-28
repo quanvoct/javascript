@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Số đảo ngược</title>
+  </head>
+  <body>
+    <script>
+      // let content = prompt('Nhập một nội dung:', 0);
+      // let array = content.split("").reverse().join(""); //Lười thì có thể làm cách này
+      // alert(array);
+      let number = parseInt(prompt("Nhập một nội dung:", 0));
+      let last = 0,
+        revert = 0;
+      while (number != 0) {
+        last = number % 10;
+        revert = revert * 10 + last;
+        number = (number - last) / 10;
+      }
+      console.log(revert);
+    </script>
+  </body>
+</html>
