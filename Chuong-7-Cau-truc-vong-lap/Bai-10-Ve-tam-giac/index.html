@@ -149,14 +149,14 @@
     if (!isNaN(year) && year > 1970) {
       for (let i = 1; i <= 12; i++) {
         bai4 += '<div class="month">';
-        bai4 += '<div class="text-center py-10" style="width: 100%"><strong> THÁNG ' + i + '</strong></div>';
+        bai4 += '<div class="text-center py-10" style="width: 100%; border-bottom: 1px solid #999;"><strong> THÁNG ' + i + '/' + year + '</strong></div>';
         for (let k = 0; k < 7; k++) {
           bai4 += '<div class="day py-10">' + dayName[k] + '</div>';
         }
         firstDate = (i <= 9) ? year + '-0' + i + '-01' : year + '-' + i + '-01';
         const milisecond = new Date(firstDate).getTime();
         var firstDateName = ((milisecond / 86400000) % 7) + 3;
-        firstDateName = (firstDateName > 7) ? firstDateName - 7 : firstDateName;
+        firstDateName = (firstDateName >= 7) ? firstDateName - 7 : firstDateName;
         bai4 += '<div style="width: ' + (firstDateName * 70) + 'px; height: 40px; float: left;"></div>';
         switch (i) {
           case 2:
