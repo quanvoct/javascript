@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game đoán số</title>
-  </head>
-  <body>
-    <button onclick="play()">Bắt đầu</button>
-    <script>
-      function play() {
-        let maxNumber = parseInt(prompt("Nhập giới hạn số cần đoán"));
-        let generateNumber = Math.random() * maxNumber;
-        console.log(generateNumber.toFixed(0));
-        let i = 0;
-        while (i < 2) {
-          let inputNumber = (i = 0) ? parseInt(prompt("Nhập số bạn muốn đoán")) : parseInt(prompt("Thử nhập một số khác"));
-          if (inputNumber == generateNumber.toFixed(0)) {
-            document.write(
-              "<br/>Bạn đã đoán đúng! Chính là ",
-              generateNumber.toFixed(0)
-            );
-            break;
-          } else {
-            alert("Bạn đã đoán sai");
-            i++;
-          }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game đoán số</title>
+</head>
+
+<body>
+  <button onclick="play()">Bắt đầu</button>
+  <script>
+    function play() {
+      let maxNumber = parseInt(prompt("Nhập giới hạn số cần đoán"));
+      let generateNumber = Math.random() * maxNumber;
+      console.log(generateNumber.toFixed(0));
+      let i = 2;
+      while (i >= 0) {
+        let inputNumber = (i == 0) ? parseInt(prompt("Nhập số bạn muốn đoán")) : parseInt(prompt("Thử nhập một số khác"));
+        if (inputNumber == generateNumber.toFixed(0)) {
+          document.write(
+            "<br/>Bạn đã đoán đúng! Chính là ",
+            generateNumber.toFixed(0)
+          );
+          break;
+        } else {
+          alert("Bạn đã đoán sai. Còn " + i + " Lượt chơi");
+          i--;
         }
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

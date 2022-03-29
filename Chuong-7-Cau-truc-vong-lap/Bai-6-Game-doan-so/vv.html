@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khac</title>
+</head>
+<body>
+    <button onclick="play()">Bắt đầu</button>
+    <script>
+        function play() {
+            let maxNumber = parseInt(prompt('Nhập vào giới hạn cần đoán:'));
+            a = Math.floor(Math.random() * maxNumber);
+
+            for (let i = 0; i < 4; i++) {
+                if (i == 3) {
+                    alert('Hết lượt');
+                    break;
+                }
+                let inputNumber = parseInt(prompt('Nhập số muốn đoán:'));
+
+                if (inputNumber == a) {
+                    document.write('Bạn đã đoán đúng!');
+                    break;
+                } else {
+                    alert('Bạn đã đoán sai');
+                }
+            }
+            alert('Số ngẫu nhiên là '+a);
+        }
+    </script>
+</body>
+</html>
