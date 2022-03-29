@@ -10,9 +10,8 @@
     <button onclick="play()">Bắt đầu</button>
     <script>
         function play() {
-            let maxNumber = parseInt(prompt('Nhập vào giới hạn cần đoán:'));
-            a = Math.floor(Math.random() * maxNumber);
-
+            let maxNumber = parseInt(prompt('Nhập vào giới hạn số cần đoán:'))
+            random = Math.floor(Math.random() * maxNumber)
             for (let i = 0; i < 4; i++) {
                 if (i == 3) {
                     alert('Hết lượt');
@@ -20,14 +19,14 @@
                 }
                 let inputNumber = parseInt(prompt('Nhập số muốn đoán:'));
 
-                if (inputNumber == a) {
+                if (inputNumber == random) {
                     document.write('Bạn đã đoán đúng!');
                     break;
                 } else {
                     alert('Bạn đã đoán sai');
                 }
             }
-            alert('Số ngẫu nhiên là '+a);
+            alert('Số ngẫu nhiên là '+random);
         }
     </script>
 </body>

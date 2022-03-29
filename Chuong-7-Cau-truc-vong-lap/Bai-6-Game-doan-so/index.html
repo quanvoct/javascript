@@ -12,20 +12,20 @@
   <button onclick="play()">Bắt đầu</button>
   <script>
     function play() {
-      let maxNumber = parseInt(prompt("Nhập giới hạn số cần đoán"));
-      let generateNumber = Math.random() * maxNumber;
+      let a = 1,
+      b = 100,
+      generateNumber = Math.floor(Math.random() * 99 + 1);
       console.log(generateNumber.toFixed(0));
       let i = 2;
       while (i >= 0) {
-        let inputNumber = (i == 0) ? parseInt(prompt("Nhập số bạn muốn đoán")) : parseInt(prompt("Thử nhập một số khác"));
+        let inputNumber = (i == 2) ? parseInt(prompt("Nhập số bạn muốn đoán")) : parseInt(prompt("Thử nhập một số khác"));
         if (inputNumber == generateNumber.toFixed(0)) {
-          document.write(
-            "<br/>Bạn đã đoán đúng! Chính là ",
-            generateNumber.toFixed(0)
-          );
+          document.write("<br/>Bạn đã đoán đúng! Chính là ", generateNumber.toFixed(0));
           break;
         } else {
-          alert("Bạn đã đoán sai. Còn " + i + " Lượt chơi");
+          if(inputNumber > generateNumber.toFixed(0)) b = inputNumber;
+          else a = inputNumber;
+          alert("Bạn đã đoán sai. Còn " + i + " Lượt chơi. Gợi ý: [" + a + "-" + b +"]");
           i--;
         }
       }

@@ -8,32 +8,63 @@
   </head>
   <body>
     <script>
-      const quantity = 10;
-      tablea = '<table cellpadding="10" cellspacing="0" border="1" style="float: left; margin-left: 20px">';
-      for (let hang = 1; hang <= quantity; hang++) {
-        tablea += "<tr>";
-        for (let cot = 1; cot <= quantity; cot++) {
-          tablea += "<td>" + hang * cot + "</td>";
+      // const quantity = 10;
+      // tablea = '<table cellpadding="10" cellspacing="0" border="1" style="float: left; margin-left: 20px">';
+      // for (let hang = 1; hang <= quantity; hang++) {
+      //   tablea += "<tr>";
+      //   for (let cot = 1; cot <= quantity; cot++) {
+      //     tablea += "<td>" + hang * cot + "</td>";
+      //   }
+      //   tablea += "</tr>";
+      // }
+      // tablea += "</table>";
+      // tableb = '<table cellpadding="10" cellspacing="0" border="1" style="float: left; margin-left: 20px">';
+      // let row = 1;
+      // let col = 1;
+      // while (row <= quantity) {
+      //   tableb += "<tr>";
+      //   while (col <= quantity) {
+      //       console.log(row, col);
+      //     tableb += "<td>" + row * col + "</td>";
+      //     col++;
+      //   }
+      //   tableb += "</tr>";
+      //   col = 1;
+      //   row++;
+      // }
+      // tableb += "</table>";
+      // document.write(tablea, tableb);
+
+
+      // tablec = '<table cellpadding="10" cellspacing="0" border="1">';
+      // tablec += '<tr>';
+      // for (let i = 1, j = 1; i <= 100; i++) {
+      //   if (j == 11) break;
+      //   tablec += '<td>' + (i * j) +'</td>';
+      //   if (i == 10) {
+      //     tablec += '</tr><tr>';
+      //     j++;
+      //     i = 0;
+      //     console.log(j);
+      //   }
+      // }
+      // tablec += '</tr>';
+      // tablec += '</table>';
+      // document.write(tablec);
+
+      let tabled = '<table cellpadding="10" cellspacing="0" border="1"><tr>';
+        for (let i = 1, j = 1; i < 100; i++) {
+          if(j == 11) break;
+          tabled += '<td>' + (i * j) + '</td>';
+          if (i == 10) {
+            tabled += '</tr><tr>';
+            j++;
+            i = 0;
+          }
         }
-        tablea += "</tr>";
-      }
-      tablea += "</table>";
-      tableb = '<table cellpadding="10" cellspacing="0" border="1" style="float: left; margin-left: 20px">';
-      let row = 1;
-      let col = 1;
-      while (row <= quantity) {
-        tableb += "<tr>";
-        while (col <= quantity) {
-            console.log(row, col);
-          tableb += "<td>" + row * col + "</td>";
-          col++;
-        }
-        tableb += "</tr>";
-        col = 1;
-        row++;
-      }
-      tableb += "</table>";
-      document.write(tablea, tableb);
+      tabled += '</tr></table>';
+      document.write(tabled);
+        
     </script>
   </body>
 </html>
