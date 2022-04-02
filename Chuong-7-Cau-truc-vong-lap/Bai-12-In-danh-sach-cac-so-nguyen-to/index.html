@@ -34,7 +34,7 @@ document.write('<hr>');
     //Chạy vòng lặp con kiểm tra số i có chia hết cho số nào khác tính từ 2 đến i-1 không, nếu có thì trả biến temp về giá trị sai
     //Sau khi chạy vòng lặp mà biến temp vẫn đúng thì hiển thị nó như 1 số nguyên tố và giảm biến đếm xuống 1 đơn vị
     document.write('Cách 2:<br/>');
-    for (let i = 1, j = max; j > 0; i++) {
+    for (let i = 2, j = max; j > 0; i++) {
       let temp = true;
       for (let j = 2; j < i; j++) {
         if (i % j == 0) {

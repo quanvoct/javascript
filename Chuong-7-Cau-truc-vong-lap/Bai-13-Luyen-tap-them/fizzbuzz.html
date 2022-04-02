@@ -22,11 +22,16 @@
                 a += '<br/>';
             }
             else {
-                a += i.toString();
-                a += '<br/>';
+                a += i + '<br/>';
             }
         }
         document.write(a);
+        // cách 2
+        //chạy vòng lặp từ 0 - 99
+        //trong vòng lặp dùng câu lệnh if-else hoặc switch-case để phân nhánh công việc
+        //check điều kiện i có chia hết cả 3 và 5 không, nếu đúng thì thay i = fizzbuzz
+        //nếu không đúng thì check i có in hết cho 3 không và i có chia hết cho 5 không, nếu có thì in ra fizz hoặc buzz
+        //không chia hết cho đứa nào hết thì in ra giá trị i
     </script>
 </body>
 
