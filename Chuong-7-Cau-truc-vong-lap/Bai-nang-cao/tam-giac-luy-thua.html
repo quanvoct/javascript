@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tam giác số</title>
+</head>
+<body>
+    <script>
+        var quantity = 10;
+        var bai3 = '';
+        for (let i = 0; i <= quantity; i++) {
+          for (let j = 0; j < i; j++) {
+            bai3 += Math.pow(2, j) + '&nbsp;';
+          }
+          for (let k = i; k >= 0; k--) {
+            bai3 += Math.pow(2, k) + '&nbsp;';
+          }
+          bai3 += '<br/>';
+        }
+        document.write(bai3);</script>
+</body>
+</html>

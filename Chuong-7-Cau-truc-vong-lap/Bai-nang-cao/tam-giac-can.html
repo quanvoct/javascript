@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tam giác cân</title>
+</head>
+<body>
+    <script>
+        var quantity = 10;
+        var bai1 = '';
+        for (let i = 1; i <= quantity; i++) {
+          for (let j = i; j > 0; j--) {
+            bai1 += j + '&nbsp;';
+          }
+          for (let k = 2; k <= i; k++) {
+            bai1 += k + '&nbsp;';
+          }
+          bai1 += '<br/>';
+        }
+        bai1 += '</div>';
+        document.write(bai1);</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In lịch</title>
+    <style>
+        <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    
+    .col {
+      float: left;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .py-10 {
+      padding: 10px 0px 10px 0px;
+    }
+
+    .day {
+      width: 70px;
+      height: 20px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .month {
+      margin: 20px 0px 20px 10px;
+      width: 490px;
+      float: left;
+      height: 310px;
+      border: 0.5px solid #ccc;
+    }
+  </style>
+    </style>
+</head>
+<body>
+    <script>
+        var bai4 = '<div class="col py-10">',
+        year = parseInt(prompt('Nhập năm bạn muốn in lịch'), 0),
+        dayName = ['T.Hai', 'T.Ba', 'T.Tư', 'T.Năm', 'T.Sáu', 'T.Bảy', 'C.Nhật'];
+    if (!isNaN(year) && year > 1970) {
+      for (let i = 1; i <= 12; i++) {
+        bai4 += '<div class="month">';
+        bai4 += '<div class="text-center py-10" style="width: 100%; border-bottom: 1px solid #999;"><strong> THÁNG ' + i + '/' + year + '</strong></div>';
+        for (let k = 0; k < 7; k++) {
+          bai4 += '<div class="day py-10">' + dayName[k] + '</div>';
+        }
+        firstDate = (i <= 9) ? year + '-0' + i + '-01' : year + '-' + i + '-01';
+        const milisecond = new Date(firstDate).getTime();
+        var firstDateName = ((milisecond / 86400000) % 7) + 3;
+        firstDateName = (firstDateName >= 7) ? firstDateName - 7 : firstDateName;
+        bai4 += '<div style="width: ' + (firstDateName * 70) + 'px; height: 40px; float: left;"></div>';
+        switch (i) {
+          case 2:
+            if (year % 4 == 0) {
+              if (year % 100 == 0) {
+                if (year % 400 == 0) day = 29;
+                else day = 28;
+              } else day = 29;
+            } else day = 28;
+            break;
+          case 4:
+          case 6:
+          case 9:
+          case 11:
+            day = 30;
+            break;
+          default:
+            day = 31;
+            break;
+        }
+        for (let j = 1; j <= day; j++) {
+          bai4 += '<div class="day py-10"> ' + j + ' </div>';
+
+        }
+        bai4 += '</div>';
+      }
+      bai4 += '</div>';
+      document.write(bai4);
+
+    } else {
+      alert('Năm bạn nhập không hợp lệ!');
+    }
+    </script>
+</body>
+</html>
