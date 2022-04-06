@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập với các phương thức</title>
+</head>
+<body>
+    <script>
+        var arrayA = ['Mãng cầu', 'Ổi', 'Lê', 'Hồng xiêm'];
+        var arrayB = ['Đào', 'Dừa', 'Đu đủ', 'Xoài'];
+        var str = 'Nhà em có trồng các loại cây ăn trái như: ';
+        str += arrayA.join(', ');
+        str += '. Nhưng vừa rồi, vườn cây ' + arrayA[arrayA.length-1] + ' và ' + arrayA[0] + ' ít trái quá nên bố em đã đốn bỏ, thay bằng ';
+        str += arrayB.join(', ');
+        arrayA.pop();
+        arrayA.shift();
+        str += '. Vậy là ngoài những loại cây đang có là ';
+        str += arrayA.join(', ');
+        for (let i = 0; i < arrayB.length; i++) {
+            arrayA.push(arrayB[i]);
+        }
+        str += ' thì nhà em đã có thêm rất nhiều cây ăn trái khác. Tất cả ' + arrayA.length + ' loại cây trong vườn nhà em bây giờ là: ';
+        str += arrayA.join(', ');
+        document.write(str);
+    </script>
+</body>
+</html>

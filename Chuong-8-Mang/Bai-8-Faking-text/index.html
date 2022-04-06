@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faking text</title>
+</head>
+<body>
+    <textarea rows="3" cols="50" id="output"></textarea>
+    <script>
+        var output = document.getElementById('output');
+        var str = 'Chào mừng các bạn đến với khóa học Javascript tại CodeGym!';
+        let display = [];
+        str = str.split("");
+        strlength = str.length;
+        output.addEventListener('keydown', function (e) {
+            e.preventDefault();
+            display.push(str[0]);
+            console.log(display);
+            str.shift();
+            console.log(str);
+            output.value = display.join('');
+            if (display.length >= strlength) {
+                display = [];
+                output.value = '';
+                str = 'Chào mừng các bạn đến với khóa học Javascript tại CodeGym!';
+                str = str.split("");
+            }
+        })
+    </script>
+</body>
+</html>

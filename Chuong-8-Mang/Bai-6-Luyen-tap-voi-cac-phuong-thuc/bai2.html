@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Số chẵn lẻ</title>
+</head>
+<body>
+    <input type="number" id="input">
+    <span id="output"></span>
+    <script>
+        var input = document.getElementById('input'); //2586348
+        var output = document.getElementById('output');
+        var str = '';
+        input.addEventListener('keyup', function () {
+            //Cach cua Thinh
+            // let num = input.value.split(''); //[2,5,8,6,3,4,8]
+            // for (let i = 0; i+1 < num.length; i++) { 
+            //     if(num[i] % 2 == 0 && num[i+1] %2 ==0) {
+            //         num.splice(i+1, 0, '-'); //[2,5,8,6,3,4,8]
+            //     }
+            // }
+            // for (let i = 1; i < num.length; i++) {
+            //     if(num[i-1] % 2 == 0) {
+            //         if(num[i] %2 ==0) {
+            //             num.splice(i, 0, '-');
+            //         }
+            //     }
+            // }
+            for (let i = 0; i < num.length-1; i++) { //[2,5,8,6,3,4,8]
+                str += num[i];
+                if(num[i] % 2 == 0 && num[i+1] % 2 == 0) 
+                str += '-';
+            }
+        //output.innerHTML = num.join('');
+        output.innerHTML = str;
+        str='';
+        })
+    </script>
+</body>
+</html>

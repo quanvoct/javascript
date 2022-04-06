@@ -46,10 +46,7 @@
                 }
                 if (vitri.length > 0) { //Chạy hết 2 vòng lặp mà mảng vitri có add thêm phần tử thì có nghĩa là chuỗi đã nhập có chỗ nào đó không đúng với danh sách định sẵn
                     let text = 'Chuỗi không hợp lệ tại vị trí: '; //Khai báo chuỗi báo lỗi
-                    for (let i = 0; i < vitri.length; i++) { //Chạy vòng lặp lấy từng vị trí trong mảng vitri để hiển thị ra
-                        if(i+1 < vitri.length) text += (vitri[i] + 1) +', '; //Nếu chưa phải phần tử cuối cùng thì thêm dấu phẩy phía sau.
-                        else text += (vitri[i] + 1);                    
-                    }
+                    text += vitri.join(', ');
                     output.innerHTML = text;
                 } else { //Nếu mảng vitri không có phần tử nào lỗi nghĩa là mọi thứ OK, trả về output rỗng.
                     output.innerHTML = '';

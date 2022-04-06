@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viết hoa các ký tự</title>
+</head>
+<body>
+    <input type="text" id="input">
+    <span id="output"></span>
+    <script>
+        input.addEventListener('keyup', function () {
+            var input = document.getElementById('input');
+            var output = document.getElementById('output');
+            var checkstr = "AÁÀẢÃẠĂẮẰẴẲẶÂBCDĐEÉÈẺẼẸÊFGHIJKLMNOÔƠPQRSTUSVWXYZ"; //uppercase
+            checkstr = checkstr.split(''); //[A,B,C...]
+            var str = input.value;
+            str = str.split(''); //['C','h','à'...]
+            for (let i = 0; i < str.length; i++) {
+
+                /* Nếu không dùng includes thì dùng cái này cũng OK */
+                // check = false;
+                // for (let j = 0; j < checkstr.length; j++) {
+                //     if (str[i] == checkstr[j]) {
+                //         check = true;
+                //     }
+                // }
+                // if (check == false) {
+                //     return 'Chữ viết thường';
+                // } else {
+                //     return 'Chữ viết hoa';
+                // }
+
+
+                // if (checkstr.includes(str[i])) {
+                //     console.log('dung');
+                //     outputText += str[i].toLowerCase();
+                // } else {
+                //     console.log('sai');
+                //     outputText += str[i].toUpperCase();
+                // }
+                if (checkstr.includes(str[i])) {
+                    str[i] = str[i].toLowerCase();
+                } else {
+                    str[i] = str[i].toUpperCase();
+                }
+            }
+            output.innerHTML = str.join('');
+        })
+    </script>
+</body>
+</html>
