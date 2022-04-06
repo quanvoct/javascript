@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game caro</title>
+</head>
+
+<body>
+    <input type="text" id="toado">
+    <button onclick="changeValue()">Đánh cờ</button>
+    <div id="hienthi"></div>
+    <script>
+        function inBanCo(obj) {
+            let str = '';
+            for (let row = 0; row < banco.length; row++) {
+                for (let col = 0; col < banco[row].length; col++) {
+                    str += banco[row][col] + '&nbsp;&nbsp;';
+                }
+                str += '<br/>';
+            }
+            hienthi.innerHTML = str;
+            str = '';
+        }
+
+
+        var toado = document.getElementById('toado');
+        var hienthi = document.getElementById('hienthi');
+        var quantity = 8;
+        let banco = [];
+        for (let i = 0; i < quantity; i++) {
+            banco.push([]); //Thêm một mảng rỗng vào mảng banco
+            for (let j = 0; j < quantity; j++) {
+                banco[i].push("O"); //Push chữ "O" vào mảng rỗng
+            }   
+        }
+        inBanCo(banco);
+
+        function changeValue() {
+            let text = toado.value; //2,3
+            const vitri = text.split(","); //[2,3]
+            console.log(vitri[0]-1); //1
+            if (vitri[0]-1 >= 5 || vitri[1]-1 >= 5) {
+                alert ('Lọt khổ giấy');
+            } else {
+                banco[vitri[0]-1][vitri[1]-1] = 'X';
+                inBanCo(banco);
+            }
+        }
+    </script>
+</body>
+
+</html>

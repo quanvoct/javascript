@@ -12,6 +12,7 @@
     <div id="result"></div>
     <script>
         var result = document.getElementById('result');
+        var value = document.getElementById('value');
         var element;
         var array = [];
         function modify(obj) {
@@ -19,6 +20,7 @@
         }
         function addElement(params) {
             array.push(element);
+            value.innerHTML = '';
             let str = '';
             for (let i = 0; i < array.length; i++) {
                 str += 'Element ' + i + ' = ' + array[i] + '<br/>';

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra giá trị trong mảng</title>
+</head>
+<body>
+    <input type="text" id="value" onclick="input(this)">
+    <button onclick="kiemtra()">check</button>
+    <span id="output"></span>
+    <script>
+        var value = document.getElementById('value');
+        var check = document.getElementById('check');
+        var output = document.getElementById('output');
+        var boolean = false;
+        var num = 0;
+        var str = [];
+        var array = [2, 4, 6, 8, 10, 2, 8];
+        function kiemtra() {
+            num = parseInt(value.value);
+            console.log(num);
+            for (let i = 0; i < array.length; i++) {
+                if (num == array[i]) {
+                    boolean = true;
+                    str.push(i);
+                }
+            }
+            if (boolean == true) {
+                output.innerHTML = 'Giá trị của bạn nhập xuất hiện tại vị trí: ' + str.join(', ');
+                str = [];
+            } else {
+                output.innerHTML = 'Không tìm thấy giá trị ' + num + ' trong mảng';
+                str = [];
+            }
+        }
+    </script>
+</body>
+</html>
