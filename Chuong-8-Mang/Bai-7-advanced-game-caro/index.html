@@ -26,8 +26,7 @@
                 <div class="card-header text-center">
                     <h3>Player A</h3>
                 </div>
-                <div class="card-body" id="playerA">
-                    Các lượt chơi của playerA
+                <div class="card-body" id="playerA" style="font-family:'Courier New', Courier, monospace;">
                 </div>
             </div>
         </div>
@@ -36,8 +35,7 @@
                 <div class="card-header text-center">
                     <h3>Player B</h3>
                 </div>
-                <div class="card-body" id="playerB">
-                    Các lượt chơi của playerB
+                <div class="card-body" id="playerB" style="font-family:'Courier New', Courier, monospace;">
                 </div>
             </div>
         </div>
@@ -49,15 +47,16 @@
                 for (let col = 0; col < banco[row].length; col++) {
                     str += '<a style="cursor: pointer" id="'
                     str += row + ',' + col;
-                    str += '" onclick="doAction(this)">&nbsp;';
+                    str += '" onclick="doAction(this)">';
                     str += banco[row][col];
-                    str += '&nbsp;</a>';
+                    str += '</a>&nbsp;';
                 }
                 str += '<br/>';
             }
             str += '</h1>'
             hienthi.innerHTML = str;
         }
+
         var luotchoi = document.getElementById('luotchoi');
         var count = document.getElementById('count');
         var hienthi = document.getElementById('hienthi');
@@ -74,29 +73,22 @@
         }
         inBanCo(banco);
 
-
-        function doAction(obj) {
+        function doAction(obj) {   
             vitri = obj.id.split(',');
-            if (count.innerText % 2 == 0) {
-                banco[vitri[0]][vitri[1]] = 'X';
-                luotchoi.innerText++;
-            } else {
-                banco[vitri[0]][vitri[1]] = 'O';
+            if (banco[vitri[0]][vitri[1]] == '•') {
+                if (count.innerText % 2 == 0) {
+                    banco[vitri[0]][vitri[1]] = 'X';
+                    luotchoi.innerText++;
+                    lc = (luotchoi.innerText < 10) ? '0' + luotchoi.innerText : luotchoi.innerText;
+                    playerA.innerHTML += 'Lượt ' + lc + ': <span id="flowA">' + vitri[0] + ' &times; ' + vitri[1] + '</span><br/>';
+                } else {
+                    banco[vitri[0]][vitri[1]] = 'O';
+                    playerB.innerHTML += 'Lượt ' + lc + ': <span id="flowB">' + vitri[0] + ' &times; ' + vitri[1] + '</span><br/>';
+                }
+                count.innerText++;
+                inBanCo(banco);
             }
-            count.innerText++;
-            inBanCo(banco);
         }
-        // function changeValue() {
-        //     let text = toado.value; //2,3
-        //     const vitri = text.split(","); //[2,3]
-        //     console.log(vitri[0] - 1); //1
-        //     if (vitri[0] - 1 >= quantity || vitri[1] - 1 >= quantity) {
-        //         alert('Lọt khổ giấy');
-        //     } else {
-        //         banco[vitri[0] - 1][vitri[1] - 1] = 'X';
-        //         inBanCo(banco);
-        //     }
-        // }
     </script>
 </body>
 
