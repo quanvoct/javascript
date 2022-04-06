@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra ký tự trong mảng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="card my-3 mx-auto" style="width: 30rem">
+      <div class="card-body">
+        <span>Các ký tự nhập phải thuộc trong các ký tự sau</span>
+        <div id="baselist">A,T,C,G</div>
+        <form id="currencyExchange">
+            <label>Nhập chuỗi cần kiểm tra</label>
+            <input type="text" class="form-control" id="sequence" />
+            <span class="text-danger" id="output"></span>
+        </form>
+      </div>
+    </div>
+    <script>
+        var sequence = document.getElementById('sequence');
+        var baselist = document.getElementById('baselist');
+        var output = document.getElementById('output');
+        sequence.addEventListener('keyup', function () { /* Sau mỗi lần keyUp thì sẽ kiểm tra chuỗi 1 lần*/
+            if (sequence.value == '') { //Nếu giá trị của chuỗi rỗng, trả về output cũng là rỗng
+                output.innerHTML = '';
+            } else { //Ngược lại thì kiểm tra từng ký tự trong chuỗi có xuất hiện trong danh sách đã cho không
+                let str = sequence.value.toUpperCase(); //Khai báo biến str có giá trị là toàn bộ chuỗi sau khi đã chuyển sang kiểu viết hoa
+                let letter = str.split(""); //Khai báo biến letter với giá trị là chuỗi str được tách ra thành mảng với mỗi phần tử là 1 ký tự
+                let list = baselist.innerText.toUpperCase();
+                let base     = list.split(","); // Tách biến list ra theo từng dấu phẩy
+                let vitri = []; //Tạo một mảng trống dùng để lưu các vị trí bị lỗi
+                for (let i = 0; i < letter.length; i++) { //Dùng vòng lặp để lấy từng ký tự trong mảng đã nhập vào để mang đi so sánh
+                    let check = false; //Tạo một biến check, cho nó giá trị mặc định là false
+                    for (let j = 0; j < base.length; j++) { //Dùng vòng lặp để lấy từng ký tự trong mảng baselist định sẵn để mang đi so sánh
+                        if (letter[i] == base[j]) { //Nếu ký tự đã nhập đúng với ký tự đang kiểm tra trong baselist thì chuyển biến check thành true.
+                            check = true;
+                        }
+                    }
+                    if(check == false) { //Nếu hết vòng lặp mà check vẫn bằng false thì nghĩa là ký tự đã nhập đó không trùng với bất kỳ ký tự nào trong danh sách định sẵn
+                        vitri.push(i); //Thêm vị trí này vào để hiển thị cho người dùng biết sai ở đâu mà sửa
+                    }
+                }
+                if (vitri.length > 0) { //Chạy hết 2 vòng lặp mà mảng vitri có add thêm phần tử thì có nghĩa là chuỗi đã nhập có chỗ nào đó không đúng với danh sách định sẵn
+                    let text = 'Chuỗi không hợp lệ tại vị trí: '; //Khai báo chuỗi báo lỗi
+                    for (let i = 0; i < vitri.length; i++) { //Chạy vòng lặp lấy từng vị trí trong mảng vitri để hiển thị ra
+                        if(i+1 < vitri.length) text += (vitri[i] + 1) +', '; //Nếu chưa phải phần tử cuối cùng thì thêm dấu phẩy phía sau.
+                        else text += (vitri[i] + 1);                    
+                    }
+                    output.innerHTML = text;
+                } else { //Nếu mảng vitri không có phần tử nào lỗi nghĩa là mọi thứ OK, trả về output rỗng.
+                    output.innerHTML = '';
+                }
+            }
+        });
+    </script>
+  </body>
+</html>
