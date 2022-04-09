@@ -8,7 +8,12 @@
 </head>
 <body>
     <script>
-        var array = [1,2,3,4,5,6,7,8,9];
+        var array = [];
+        for (let i = 0; i < 15; i++) {
+            element = Math.floor(Math.random() * 100);
+            array.push(element);
+        }
+        console.log(array.join('-'));
         console.log(array.reverse().join('-'));
     </script>
 </body>

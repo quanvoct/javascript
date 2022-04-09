@@ -28,7 +28,7 @@
         var toado = document.getElementById('toado');
         var hienthi = document.getElementById('hienthi');
         var quantity = 8;
-        let banco = [];
+        var banco = [];
         /* Nếu lười đánh số vào từng phần tử thì mình dùng vòng lặp để push các phần tử vào mảng */
         for (let i = 0; i < quantity; i++) {
             banco.push([]); //Thêm một mảng rỗng vào mảng banco
@@ -39,8 +39,8 @@
         inBanCo(banco);
 
         function changeValue() {
-            let text = toado.value; //2,3
-            const vitri = text.split(","); //[2,3]
+            let text = toado.value; //5,8
+            const vitri = text.split(","); //[5,8]
             console.log(vitri[0] - 1); //1
             if (vitri[0] - 1 >= quantity || vitri[1] - 1 >= quantity) {
                 alert('Lọt khổ giấy');

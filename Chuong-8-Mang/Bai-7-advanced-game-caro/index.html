@@ -8,88 +8,181 @@
     <title>Game caro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .row-flex {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="row">
+    <div class="row mx-auto row-flex" style="width:100rem">
         <div class="col-8">
-            <div class="card my-3 mx-auto">
+            <div class="card my-3 mx-auto h-100">
                 <div class="card-header text-center">
-                    <h3>BÀN CỜ CARO - Lượt chơi thứ: <span id="luotchoi">0</span><span id="count" class="d-none">0</span></h3>
+                    <h3>BÀN CỜ CARO - Lượt chơi thứ: <span id="luotChoi">0</span><span id="count"
+                            class="d-none">0</span></h3>
                 </div>
-                <div class="card-body" id="hienthi" style="font-family:'Courier New', Courier, monospace;">
+                <div class="card-body text-center" id="hienThi" style="font-family:'Courier New', Courier, monospace;">
                 </div>
             </div>
         </div>
         <div class="col-2">
-            <div class="card my-3 mx-auto">
+            <div class="card my-3 mx-auto h-100">
                 <div class="card-header text-center">
-                    <h3>Player A</h3>
+                    <h3>Player X</h3>
                 </div>
-                <div class="card-body" id="playerA" style="font-family:'Courier New', Courier, monospace;">
+                <div class="card-body" id="playerX" style="font-family:'Courier New', Courier, monospace;">
                 </div>
             </div>
         </div>
         <div class="col-2">
-            <div class="card my-3 mx-auto">
+            <div class="card my-3 mx-auto h-100">
                 <div class="card-header text-center">
-                    <h3>Player B</h3>
+                    <h3>Player O</h3>
                 </div>
-                <div class="card-body" id="playerB" style="font-family:'Courier New', Courier, monospace;">
+                <div class="card-body" id="playerO" style="font-family:'Courier New', Courier, monospace;">
                 </div>
             </div>
         </div>
     </div>
     <script>
         function inBanCo(obj) {
+            /*-----------------------------------------------------------------
+            Hàm này xuát biến bàn cờ hiển thị ra màn hình người chơi
+            -------------------------------------------------------------------*/
             let str = '<h1>';
-            for (let row = 0; row < banco.length; row++) {
-                for (let col = 0; col < banco[row].length; col++) {
-                    str += '<a style="cursor: pointer" id="'
-                    str += row + ',' + col;
-                    str += '" onclick="doAction(this)">';
-                    str += banco[row][col];
+            for (let row = 0; row < banCo.length; row++) {
+                for (let col = 0; col < banCo[row].length; col++) {
+                    str += '<a style="cursor: pointer" onclick="doAction(' + row + ',' + col + ')">';
+                    str += banCo[row][col];
                     str += '</a>&nbsp;';
                 }
                 str += '<br/>';
             }
             str += '</h1>'
-            hienthi.innerHTML = str;
+            return str;
         }
+        // function elementFrequency(array) {
+        /*-----------------------------------------------------------------
+        Hàm này để kiểm tra trong mảng truyền vào có phần tử nào lặp lại nhiều nhất và lặp lại bao nhiêu lần
+        ĐÃ CODE HOÀN CHỈNH ĐỂ DÀNH MAI MỐT XÀI
+        -------------------------------------------------------------------*/
+        //     array.sort(); //Sắp xếp lại các phần tử trong mảng cho ngay ngắn =))
+        //     let max = [0, 0]; //Khởi tạo mảng để lưu phần tử xuất hiện nhiều nhất và số lần xuất hiện
+        //     //Sử dụng vòng lặp for để lọc ra các phần tử xuất hiện nhiều hơn 1 lần
+        //     //So sánh số lần xuất hiện và thay đổi max khi cần.
+        //     let count = 1;
+        //     for (let i = array.length - 1; i > 0; --i) {
+        //         if (array[i] == array[i - 1]) ++count; //Thấy phần tử trùng nhau thì tiếp tục đếm
+        //         else { //Nếu không trùng là đã đến đoạn thay đổi phần tử
+        //             //So sánh số lần xuất hiện với max[1]
+        //             if (max[1] < count) {
+        //                 //Nếu tìm thấy phần tử xuất hiện nhiều hơn thì gán phần tử vào max[0]
+        //                 //Và gán số lần xuất hiện vào max[1]
+        //                 max[0] = array[i];
+        //                 max[1] = count;
+        //             }
+        //             count = 1;
+        //         }
+        //     }
+        //     return max;
+        // }
 
-        var luotchoi = document.getElementById('luotchoi');
+        function fetchArray(a, b) {
+            /*-----------------------------------------------------------------
+            Hàm này để tạo mảng đa chiều lưu trữ giá trị của 4 đường dọc, ngang, chéo ngược, chéo xuôi
+            -------------------------------------------------------------------*/
+            let array = []; //Khởi tạo mảng cha
+            for (let i = 0; i < 4; i++) {
+                array.push([]); //Khởi tạo 4 mảng con rỗng bên trong mảng cha
+            }
+            for (let i = -4; i <= 4; i++) {
+                if (b + i >= 0) {
+                    array[0].push(banCo[a][b + i]); //Hàng ngang
+                    if (a + i >= 0 && a + i < quantity) {
+                        array[2].push(banCo[a + i][b + i]); //Chéo xuôi
+                    }
+                    if (a - i >= 0 && a - i < quantity) {
+                        array[3].push(banCo[a - i][b + i]); //Chéo ngược
+                    }
+                }
+                if (a + i >= 0 && a + i < quantity) {
+                    array[1].push(banCo[a + i][b]); //Hàng dọc
+                }
+            }
+            return array;
+        }
+        function checkGame(array, element) {
+            /*-----------------------------------------------------------------
+            Hàm này để kiểm tra một phần tử xuất hiện đủ 5 lần liên tục trong mảng 2 chiều truyền vào không
+            Hàm này trả về kết quả là một mảng 2 phần tử cho biết thắng hay chưa và hàng hay cột nào thắng
+            -------------------------------------------------------------------*/
+            let check = [0, 0, element];
+            for (let i = 0; i < 4; i++) {
+                let count = 0;
+                for (let j = 0; j < array[i].length; j++) {
+                    if (array[i][j] == element) {
+                        count++; //Đi từ đầu tới cuối từng mảng con, nếu gặp ký tự truyền vào thì biến đếm tăng 1 đơn vị
+                    }
+                    if (array[i][j] != element && count > 0) {
+                        break; //Nếu đang đếm mà tự dưng ngưng đếm giữa chừng thì nghỉ đếm luôn 
+                    }
+                }
+                if (count >= 5) { //Nếu biến đếm nhiều hơn 5 nghĩa là đã đánh thắng
+                    check[0] = 1; //Xác nhận chiến thắng
+                    check[1] = i; //Ghi nhận lại là hàng nào, cột nào đã đạt được
+                }
+            }
+            return check;
+        }
+        var luotChoi = document.getElementById('luotChoi');
         var count = document.getElementById('count');
-        var hienthi = document.getElementById('hienthi');
-        var playerA = document.getElementById('playerA');
-        var playerB = document.getElementById('playerB');
-        var quantity = 10;
-        var banco = [];
-        /* Nếu lười đánh số vào từng phần tử thì mình dùng vòng lặp để push các phần tử vào mảng */
-        for (let i = 0; i < quantity; i++) {
-            banco.push([]); //Thêm một mảng rỗng vào mảng banco
-            for (let j = 0; j < quantity; j++) {
-                banco[i].push("•"); //Push chữ • vào mảng banco[i]
+        var hienThi = document.getElementById('hienThi');
+        var playerX = document.getElementById('playerX');
+        var playerO = document.getElementById('playerO');
+        var quantity = 15;
+        var banCo = [];
+        function resetBanCo() {
+            /* Nếu lười đánh số vào từng phần tử thì mình dùng vòng lặp để push các phần tử vào mảng */
+            for (let i = 0; i < quantity; i++) {
+                banCo.push([]); //Thêm một mảng rỗng vào mảng banCo
+                for (let j = 0; j < quantity; j++) {
+                    banCo[i].push("•"); //Push chữ • vào mảng banCo[i]
+                }
             }
         }
-        inBanCo(banco);
-
-        function doAction(obj) {   
-            vitri = obj.id.split(',');
-            if (banco[vitri[0]][vitri[1]] == '•') {
+        hienThi.innerHTML = inBanCo(resetBanCo());
+        function doAction(row, col) {
+            /*-----------------------------------------------------------------
+            Hàm này thực hiện thao tác mỗi người người chơi đi 1 nước cờ
+            -------------------------------------------------------------------*/
+            if (banCo[row][col] == '•') {
+                let check = [0, 0];
                 if (count.innerText % 2 == 0) {
-                    banco[vitri[0]][vitri[1]] = 'X';
-                    luotchoi.innerText++;
-                    lc = (luotchoi.innerText < 10) ? '0' + luotchoi.innerText : luotchoi.innerText;
-                    playerA.innerHTML += 'Lượt ' + lc + ': <span id="flowA">' + vitri[0] + ' &times; ' + vitri[1] + '</span><br/>';
+                    banCo[row][col] = 'X';
+                    lc = (luotChoi.innerText < 10) ? '0' + luotChoi.innerText : luotChoi.innerText;
+                    playerX.innerHTML += 'Lượt ' + lc + ': ' + row + ' &times; ' + col + '<br/>';
+                    if (luotChoi.innerText >= 4) {
+                        check = checkGame(fetchArray(row, col), 'X');
+                    }
                 } else {
-                    banco[vitri[0]][vitri[1]] = 'O';
-                    playerB.innerHTML += 'Lượt ' + lc + ': <span id="flowB">' + vitri[0] + ' &times; ' + vitri[1] + '</span><br/>';
+                    banCo[row][col] = 'O';
+                    luotChoi.innerText++;
+                    playerO.innerHTML += 'Lượt ' + lc + ': ' + row + ' &times; ' + col + '<br/>';
+                    if (luotChoi.innerText >= 4) {
+                        check = checkGame(fetchArray(row, col), 'O');
+                    }
                 }
-                count.innerText++;
-                inBanCo(banco);
+                if (check[0] == 1) {
+                    alert('Đội ' + check[2] + ' thắng');
+                } else {
+                    count.innerText++;
+                    hienThi.innerHTML = inBanCo(banCo);
+                }
             }
         }
     </script>
 </body>
-
 </html>

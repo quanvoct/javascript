@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm giá trị lớn nhất trong mảng</title>
 </head>
+
 <body>
     <script>
-        var array = [12,5412,51256,165,136,136,135,12,51,3561,512,51,36123,6];
-        array.sort(function sapxep(a,b) {
-            return b-a;
-        })
-        alert('Giá trị lớn nhất trong mảng là: '+ array[0]);
+        var array = []; //khai báo mảng
+        quantity = 10;
+        for (let i = 0; i < quantity; i++) {
+            array.push([]); //[ [],[],[]... ]
+            for (let j = 0; j < quantity; j++) {
+                element = parseInt(Math.random() * 99 + 1);
+                array[i].push(element); //push từng phần tử vào từng mảng con
+            }
+        }
+        console.log(array);
+        var min = max = array[0][0];
+        for (let i = 0; i < quantity; i++) {
+            for (let j = 1; j < quantity; j++) {
+                if (min > array[i][j]) {
+                    min = array[i][j];
+                }
+                if (max < array[i][j]) {
+                    max = array[i][j];
+                }
+            }
+        }
+        console.log('min: ' + min);
+        console.log('max: ' + max);
+        // array.sort(function sapxep(a,b) {
+        //     return b-a;
+        // })
+        // alert('Giá trị lớn nhất trong mảng là: '+ array[0]);
     </script>
 </body>
+
 </html>

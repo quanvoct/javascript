@@ -13,7 +13,7 @@
         input.addEventListener('keyup', function () {
             var input = document.getElementById('input');
             var output = document.getElementById('output');
-            var checkstr = "AÁÀẢÃẠĂẮẰẴẲẶÂBCDĐEÉÈẺẼẸÊFGHIJKLMNOÔƠPQRSTUSVWXYZ"; //uppercase
+            var checkstr = "AÁÀẢÃẠĂẮẰẴẲẶÂBCDĐEÉÈẺẼẸÊẾỀỂỄỆFGHIÍÌỈĨỊJKLMNOÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢPQRSTUÚÙỦŨỤƯỨỪỬỮỰSVWXYÝỲỶỸỴZ"; //uppercase
             checkstr = checkstr.split(''); //[A,B,C...]
             var str = input.value;
             str = str.split(''); //['C','h','à'...]
@@ -32,7 +32,6 @@
                 //     return 'Chữ viết hoa';
                 // }
 
-
                 // if (checkstr.includes(str[i])) {
                 //     console.log('dung');
                 //     outputText += str[i].toLowerCase();
@@ -40,6 +39,7 @@
                 //     console.log('sai');
                 //     outputText += str[i].toUpperCase();
                 // }
+
                 if (checkstr.includes(str[i])) {
                     str[i] = str[i].toLowerCase();
                 } else {
