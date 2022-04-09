@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div class="row mx-auto row-flex" style="width:100rem">
+    <div class="row mx-auto row-flex" style="width:100rem;">
         <div class="col-8">
             <div class="card my-3 mx-auto h-100">
                 <div class="card-header text-center">
@@ -43,6 +43,22 @@
                     <h3>Player O</h3>
                 </div>
                 <div class="card-body" id="playerO" style="font-family:'Courier New', Courier, monospace;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="thongBao" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">GAME OVER</h5>
+                </div>
+                <div class="modal-body">
+                    <p id="textThongBao">Đội XO thắng</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href = window.location.href">Chơi tiếp</button>
                 </div>
             </div>
         </div>
@@ -89,6 +105,21 @@
         //     }
         //     return max;
         // }
+        function expandBanCo(row, col) {
+            if (row == banCo.length - 1) {
+                let row = [];
+                for (let i = 0; i < banCo[0].length; i++) {
+                    row.push("•");
+                }
+                banCo.push(row);
+            }
+            if (col == banCo[0].length - 1 && col < 20) {
+                for (let i = 0; i < banCo.length; i++) {
+                    banCo[i].push("•");
+                }
+            }
+            return banCo;
+        }
 
         function fetchArray(a, b) {
             /*-----------------------------------------------------------------
@@ -101,14 +132,14 @@
             for (let i = -4; i <= 4; i++) {
                 if (b + i >= 0) {
                     array[0].push(banCo[a][b + i]); //Hàng ngang
-                    if (a + i >= 0 && a + i < quantity) {
+                    if (a + i >= 0 && a + i < banCo.length) {
                         array[2].push(banCo[a + i][b + i]); //Chéo xuôi
                     }
-                    if (a - i >= 0 && a - i < quantity) {
+                    if (a - i >= 0 && a - i < banCo.length) {
                         array[3].push(banCo[a - i][b + i]); //Chéo ngược
                     }
                 }
-                if (a + i >= 0 && a + i < quantity) {
+                if (a + i >= 0 && a + i < banCo.length) {
                     array[1].push(banCo[a + i][b]); //Hàng dọc
                 }
             }
@@ -137,14 +168,16 @@
             }
             return check;
         }
-        var luotChoi = document.getElementById('luotChoi');
-        var count = document.getElementById('count');
-        var hienThi = document.getElementById('hienThi');
-        var playerX = document.getElementById('playerX');
-        var playerO = document.getElementById('playerO');
-        var quantity = 15;
+        var luotChoi        = document.getElementById('luotChoi');
+        var count           = document.getElementById('count');
+        var hienThi         = document.getElementById('hienThi');
+        var playerX         = document.getElementById('playerX');
+        var playerO         = document.getElementById('playerO');
+        var textThongBao    = document.getElementById('textThongBao');
+        var thongBao        = new bootstrap.Modal(document.getElementById("thongBao"), {});
+        var quantity = 10;
         var banCo = [];
-        function resetBanCo() {
+        function resetBanCo(quantity) {
             /* Nếu lười đánh số vào từng phần tử thì mình dùng vòng lặp để push các phần tử vào mảng */
             for (let i = 0; i < quantity; i++) {
                 banCo.push([]); //Thêm một mảng rỗng vào mảng banCo
@@ -153,36 +186,38 @@
                 }
             }
         }
-        hienThi.innerHTML = inBanCo(resetBanCo());
+        hienThi.innerHTML = inBanCo(resetBanCo(quantity));
         function doAction(row, col) {
             /*-----------------------------------------------------------------
             Hàm này thực hiện thao tác mỗi người người chơi đi 1 nước cờ
             -------------------------------------------------------------------*/
-            if (banCo[row][col] == '•') {
-                let check = [0, 0];
-                if (count.innerText % 2 == 0) {
-                    banCo[row][col] = 'X';
-                    lc = (luotChoi.innerText < 10) ? '0' + luotChoi.innerText : luotChoi.innerText;
+            let check = [0, 0, 0]; //Khởi tạo biến check để lưu thông tin người thắng cuộc
+            if (banCo[row][col] == '•') { //Nếu tại tọa độ đó đang là dấu chấm (chưa đánh) thì mới cho đánh
+                lc = (luotChoi.innerText < 10) ? '0' + luotChoi.innerText : luotChoi.innerText;
+                if (count.innerText % 2 == 0) { //Nếu lượt chơi chẵn thì người chơi là X
+                    banCo[row][col] = 'X'; //Thay đổi giá trị phần tử tại tọa độ đó thành X
                     playerX.innerHTML += 'Lượt ' + lc + ': ' + row + ' &times; ' + col + '<br/>';
-                    if (luotChoi.innerText >= 4) {
+                    if (luotChoi.innerText >= 4) { //Đánh được từ 4 con trở lên thì đi kiểm tra coi nó chuẩn bị thắng hay chưa
                         check = checkGame(fetchArray(row, col), 'X');
                     }
-                } else {
-                    banCo[row][col] = 'O';
-                    luotChoi.innerText++;
+                } else { //Nếu lượt chơi lẻ thì người chơi là O
+                    banCo[row][col] = 'O'; //Thay đổi giá trị phần tử tại tọa độ đó thành O
+                    luotChoi.innerText++; //) đánh xong thì cũng là hết 1 lượt chơi
                     playerO.innerHTML += 'Lượt ' + lc + ': ' + row + ' &times; ' + col + '<br/>';
                     if (luotChoi.innerText >= 4) {
                         check = checkGame(fetchArray(row, col), 'O');
                     }
                 }
                 if (check[0] == 1) {
-                    alert('Đội ' + check[2] + ' thắng');
+                    thongBao.show();
+                    textThongBao.innerHTML = 'Đội ' + check[2] + ' thắng';
                 } else {
                     count.innerText++;
-                    hienThi.innerHTML = inBanCo(banCo);
+                    hienThi.innerHTML = inBanCo(expandBanCo(row, col));
                 }
             }
         }
     </script>
 </body>
+
 </html>
