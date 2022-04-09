@@ -17,12 +17,15 @@
 </head>
 
 <body>
-    <div class="row mx-auto row-flex" style="width:100rem;">
+    <div class="row mx-auto row-flex d-none" id="gameContainer" style="width:100rem;">
         <div class="col-8">
             <div class="card my-3 mx-auto h-100">
                 <div class="card-header text-center">
-                    <h3>BÀN CỜ CARO - Lượt chơi thứ: <span id="luotChoi">0</span><span id="count"
-                            class="d-none">0</span></h3>
+                    <h3>BÀN CỜ CARO - Lượt chơi thứ:
+                        <span id="luotChoi">0</span>
+                        <span id="count" class="d-none">1</span>
+                    </h3>
+                    <h4>Chế độ chơi: <span id="mode" class="d-inline-block">0</span></h4>
                 </div>
                 <div class="card-body text-center" id="hienThi" style="font-family:'Courier New', Courier, monospace;">
                 </div>
@@ -47,22 +50,46 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="thongBao" tabindex="-1">
+    <div class="modal fade" id="thongBao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">GAME OVER</h5>
+                    <h5 class="modal-title" id="titleThongBao"></h5>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-center">
                     <p id="textThongBao">Đội XO thắng</p>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer d-none" id="popupBtn">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="window.location.href = window.location.href">Chơi tiếp</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="window.location.href = window.location.href">Chơi tiếp</button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="d-none" id="gameModeSelector">
+        <div class="row row-flex m-auto">
+            <div class="col">
+                <div class="card">
+                    <a style="cursor: pointer;" onclick="modeSelect('vsP')" data-bs-dismiss="modal">
+                        <div class="card-body h-100 text-center">
+                            <h1>NGƯỜI<br />vs<br />NGƯỜI</h1>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <a style="cursor: pointer;" onclick="modeSelect('vsC')" data-bs-dismiss="modal">
+                        <div class="card-body h-100 text-center">
+                            <h1>NGƯỜI<br />vs<br />MÁY</h1>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function inBanCo(obj) {
             /*-----------------------------------------------------------------
@@ -106,21 +133,35 @@
         //     return max;
         // }
         function expandBanCo(row, col) {
-            if (row == banCo.length - 1) {
-                let row = [];
+            if (row == banCo.length - 1 || row == 0) {
+                let col = [];
                 for (let i = 0; i < banCo[0].length; i++) {
-                    row.push("•");
+                    col.push("•");
                 }
-                banCo.push(row);
+                if (row == 0) {
+                    banCo.unshift(col);
+                } else {
+                    banCo.push(col);
+                }
             }
-            if (col == banCo[0].length - 1 && col < 20) {
+            if (col == banCo[0].length - 1 || col == 0 && col < 20) {
                 for (let i = 0; i < banCo.length; i++) {
-                    banCo[i].push("•");
+                    if (col == 0) {
+                        banCo[i].unshift("•");
+                    } else {
+                        banCo[i].push("•");
+                    }
                 }
             }
             return banCo;
         }
-
+        function mayDanh(row, col) {
+            /*-----------------------------------------------------------------
+            Hàm này dẫn tham số hàng và cột tại vị trí người dùng vừa đánh, xét các hướng nếu có nhiều hơn 3 con thì con kế tiếp phải đánh chặn lại
+            Nếu đã bị chặn cả 2 đầu thì đi xét ô gần nhất mà máy đánh có hướng nào nhiều hơn 2 con liên tục thì đánh tại con kế tiếp
+            Nếu không nhiều hơn 3 con thì đánh tại ô gần nhất kế bên ô người dùng vừa đánh
+            -------------------------------------------------------------------*/
+        }
         function fetchArray(a, b) {
             /*-----------------------------------------------------------------
             Hàm này để tạo mảng đa chiều lưu trữ giá trị của 4 đường dọc, ngang, chéo ngược, chéo xuôi
@@ -145,6 +186,20 @@
             }
             return array;
         }
+        function resetBanCo(quantity) {
+            /* Nếu lười đánh số vào từng phần tử thì mình dùng vòng lặp để push các phần tử vào mảng */
+            for (let i = 0; i < quantity; i++) {
+                banCo.push([]); //Thêm một mảng rỗng vào mảng banCo
+                for (let j = 0; j < quantity; j++) {
+                    banCo[i].push("•"); //Push chữ • vào mảng banCo[i]
+                }
+            }
+        }
+        function modeSelect(params) {
+            mode.innerText = (params == 'vsC') ? 'NGƯỜI vs MÁY' : 'NGƯỜI vs NGƯỜI';
+            hienThi.innerHTML = inBanCo(resetBanCo(quantity));
+            gameContainer.classList.remove('d-none');
+        }
         function checkGame(array, element) {
             /*-----------------------------------------------------------------
             Hàm này để kiểm tra một phần tử xuất hiện đủ 5 lần liên tục trong mảng 2 chiều truyền vào không
@@ -168,25 +223,23 @@
             }
             return check;
         }
-        var luotChoi        = document.getElementById('luotChoi');
-        var count           = document.getElementById('count');
-        var hienThi         = document.getElementById('hienThi');
-        var playerX         = document.getElementById('playerX');
-        var playerO         = document.getElementById('playerO');
-        var textThongBao    = document.getElementById('textThongBao');
-        var thongBao        = new bootstrap.Modal(document.getElementById("thongBao"), {});
+        var luotChoi = document.getElementById('luotChoi');
+        var count = document.getElementById('count');
+        var hienThi = document.getElementById('hienThi');
+        var playerX = document.getElementById('playerX');
+        var playerO = document.getElementById('playerO');
+        var titleThongBao = document.getElementById('titleThongBao');
+        var textThongBao = document.getElementById('textThongBao');
+        var gameModeSelector = document.getElementById('gameModeSelector');
+        var mode = document.getElementById('mode');
+        var popupBtn = document.getElementById('popupBtn');
+        var gameContainer = document.getElementById('gameContainer');
+        var thongBao = new bootstrap.Modal(document.getElementById("thongBao"), {});
         var quantity = 10;
         var banCo = [];
-        function resetBanCo(quantity) {
-            /* Nếu lười đánh số vào từng phần tử thì mình dùng vòng lặp để push các phần tử vào mảng */
-            for (let i = 0; i < quantity; i++) {
-                banCo.push([]); //Thêm một mảng rỗng vào mảng banCo
-                for (let j = 0; j < quantity; j++) {
-                    banCo[i].push("•"); //Push chữ • vào mảng banCo[i]
-                }
-            }
-        }
-        hienThi.innerHTML = inBanCo(resetBanCo(quantity));
+        titleThongBao.innerHTML = 'Chọn chế độ chơi';
+        textThongBao.innerHTML = gameModeSelector.innerHTML;
+        thongBao.show();
         function doAction(row, col) {
             /*-----------------------------------------------------------------
             Hàm này thực hiện thao tác mỗi người người chơi đi 1 nước cờ
@@ -194,23 +247,31 @@
             let check = [0, 0, 0]; //Khởi tạo biến check để lưu thông tin người thắng cuộc
             if (banCo[row][col] == '•') { //Nếu tại tọa độ đó đang là dấu chấm (chưa đánh) thì mới cho đánh
                 lc = (luotChoi.innerText < 10) ? '0' + luotChoi.innerText : luotChoi.innerText;
+                let sign;
                 if (count.innerText % 2 == 0) { //Nếu lượt chơi chẵn thì người chơi là X
-                    banCo[row][col] = 'X'; //Thay đổi giá trị phần tử tại tọa độ đó thành X
+                    sign = 'X';
+                    banCo[row][col] = sign; //Thay đổi giá trị phần tử tại tọa độ đó thành X
                     playerX.innerHTML += 'Lượt ' + lc + ': ' + row + ' &times; ' + col + '<br/>';
                     if (luotChoi.innerText >= 4) { //Đánh được từ 4 con trở lên thì đi kiểm tra coi nó chuẩn bị thắng hay chưa
-                        check = checkGame(fetchArray(row, col), 'X');
+                        check = checkGame(fetchArray(row, col), sign);
+                    }
+                    if (mode.innerText == 'NGƯỜI vs MÁY') { //Nếu chế độ chơi là người và máy thì chạy hàm cho máy tự động đánh
+                        mayDanh(row, col);
                     }
                 } else { //Nếu lượt chơi lẻ thì người chơi là O
-                    banCo[row][col] = 'O'; //Thay đổi giá trị phần tử tại tọa độ đó thành O
+                    sign = 'O';
+                    banCo[row][col] = sign; //Thay đổi giá trị phần tử tại tọa độ đó thành O
                     luotChoi.innerText++; //) đánh xong thì cũng là hết 1 lượt chơi
                     playerO.innerHTML += 'Lượt ' + lc + ': ' + row + ' &times; ' + col + '<br/>';
                     if (luotChoi.innerText >= 4) {
-                        check = checkGame(fetchArray(row, col), 'O');
+                        check = checkGame(fetchArray(row, col), sign);
                     }
                 }
                 if (check[0] == 1) {
-                    thongBao.show();
+                    titleThongBao.innerHTML = '<h2>GAME OVER</h2>';
                     textThongBao.innerHTML = 'Đội ' + check[2] + ' thắng';
+                    popupBtn.classList.remove('d-none');
+                    thongBao.show();
                 } else {
                     count.innerText++;
                     hienThi.innerHTML = inBanCo(expandBanCo(row, col));
