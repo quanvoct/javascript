@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not a number</title>
+</head>
+
+<body>
+    <script>
+        function checkNumber(str) {
+            var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+            let boo = true;
+            for (let i = 0; i < str.length; i++) {
+                let check = false; //Coi như ký tự thứ i trong chuỗi str không phải là số
+                for (let j = 0; j < array.length; j++) { //chạy vòng lặp so sánh nó với từng số trong mảng trên
+                    if (parseInt(str[i]) === array[j]) { //nếu trùng với bất kỳ phần tử nào trong mảng thì có nghĩa nó là 1 ký tự số, trả về kết quả đúng, break luôn
+                        check = true;
+                        break;
+                    }
+                }
+                if (check == false) { //chạy hết vòng lặp rồi mà check vẫn là false thì nó k phải là số, kết luận luôn chuỗi nhập vào k phải là số, break luôn
+                    boo = false;
+                    return boo;
+                    break;
+                }
+            }
+            return boo; //chạy luôn 2 vòng lặp rồi mà boo vẫn true thì nghĩa là nguyên cái chuỗi input vào đúng là số, trả về kết quả là giá trị của boo
+        }
+        let a = prompt('Nhập vào một thông tin');
+        alert((checkNumber(a)) ? 'Là một số nguyên' : 'Không phải số'); //toán tử 3 ngôi bên trong 1 alert 
+    </script>
+</body>
+
+</html>

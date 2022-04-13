@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Các chòm sao</title>
+</head>
+<body>
+    <script>
+        var chomSao = ['Polaris', 'Aldebaran', 'Deneb', 'Vega', 'Altair', 'Dubhe', 'Regulus'];
+        var ngoiSao = ['Ursa Minor', 'Tarurus', 'Cygnus', 'Lyra', 'Aquila', 'Ursa Major', 'Leo'];
+
+        var text = prompt('Nhập vào tên ngôi sao','VD: Leo');
+        alert(f(text));
+
+        function f(str) {
+            let result = '';
+            for (let i = 0; i < ngoiSao.length; i++) {
+                if (ngoiSao[i] == str) {
+                    result+=chomSao[i];
+                    break;
+                }
+            }
+            if (result!='') {
+                return result;
+            } else {
+                return 'Không có kết quả!';
+            }
+        }
+    </script>
+</body>
+</html>

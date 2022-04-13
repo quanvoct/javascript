@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm giá trị nhỏ nhất</title>
+</head>
+
+<body>
+    <script>
+        var array = [];
+        for (let i = 0; i < 10; i++) {
+            let element = Math.floor(Math.random() * 100);
+            array.push(element);
+        }
+
+        function min(array) {
+            let min = array[0];
+            for (let i = 1; i < array.length; i++) {
+                if (min > array[i]) min = array[i];
+            }
+            return min;
+        }
+
+        console.log(array);
+        let a = min(array);
+        console.log('Giá trị nhỏ nhất trong mảng: ' + a);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính giai thừa</title>
+</head>
+<body>
+    <script>
+        function factorial(n) { //Khai báo hàm tính giai thừa
+            if (n > 1) {
+                n *= factorial(n-1); //Đệ quy hàm tính giai thừa
+            } else {
+                n = 1;
+            }
+            return n;
+        }
+        let a = parseFloat(prompt('Nhập vào một số:', 0));
+        alert('Giai thừa: ' +factorial(a));
+    </script>
+</body>
+</html>

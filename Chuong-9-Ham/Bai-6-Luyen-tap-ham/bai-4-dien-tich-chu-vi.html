@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diện tích và chu vi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <div class="card my-3 mx-auto" style="width: 50rem">
+        <div class="card-body">
+            <h1 class="text-primary text-center">Hình tròn</h1>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="inputHinhTron" placeholder="Nhập bán kính hình tròn"
+                    autofocus>
+            </div>
+            <p id="outputHinhTron" class="text-end"></p>
+        </div>
+    </div>
+    <div class="card my-3 mx-auto" style="width: 50rem">
+        <div class="card-body">
+            <h1 class="text-primary text-center">Hình chữ nhật</h1>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="inputHinhChuNhat"
+                    placeholder="Nhập chiều dài và chiều rộng cách nhau bởi dấu phẩy">
+            </div>
+            <p id="outputHinhChuNhat" class="text-end"></p>
+        </div>
+    </div>
+    <script>
+        function circle(r) {
+            let circle = [];
+            let pi = Math.PI;
+            s = pi * Math.pow(r, 2);
+            c = 2 * pi * r;
+            circle.push(s.toFixed(2), c.toFixed(2));
+            return circle;
+        }
+        function rectangle(a, b) {
+            let rectangle = [];
+            let s = a * b;
+            let c = (a + b) * 2;
+            rectangle.push(s, c);
+            return rectangle;
+        }
+        var inputHinhTron = document.getElementById('inputHinhTron');
+        var outputHinhTron = document.getElementById('outputHinhTron');
+        var inputHinhChuNhat = document.getElementById('inputHinhChuNhat');
+        var outputHinhChuNhat = document.getElementById('outputHinhChuNhat');
+
+        inputHinhTron.addEventListener('keyup', function () {
+            if (inputHinhTron.value != '') {
+                outputHinhTron.innerText = 'Diện tích: ' + circle(parseFloat(inputHinhTron))[0] + '; Chu vi: ' + circle(parseFloat(inputHinhTron))[1];
+            }
+        })
+
+        inputHinhChuNhat.addEventListener('keyup', function () {
+            if (inputHinhChuNhat.value != '' && inputHinhChuNhat.value.includes(',')) {
+                let z = inputHinhChuNhat.value.split(',');
+                outputHinhChuNhat.innerText = 'Diện tích: ' + rectangle(parseFloat(z[0]), parseFloat(z[1]))[0] + '; Chu vi:' + rectangle(parseFloat(z[0]), parseFloat(z[1]))[1];
+            }
+        })
+    </script>
+</body>
+
+</html>
