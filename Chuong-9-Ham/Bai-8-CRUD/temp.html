@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button {
+            background: rgb(82, 245, 84);
+            color: white;
+            border: none;
+        }
+
+        .table-edit {
+            width: 600px;
+            height: auto;
+            border-collapse: collapse;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>add new product</h1>
+            <input type="text" id="input">
+            <button onclick="addValue()" class="btn btn-primary">add</button>
+            <h1>display product</h1>
+        </div>
+        <div>
+            <table id="list" class="table-edit">
+            </table>
+        </div>
+
+    </div>
+    <script>
+        let input = document.getElementById('input')
+        let list = document.getElementById("list");
+        let product = ['iphone 5', 'samsung galaxy', 'oppo', 'redmi', 'hawai'];
+
+        add();
+        function addValue() { // hàm thêm
+            let inp = input.value;
+            product.push(inp);
+            console.log(product);
+            add();
+        }
+        function del(index) { // hàm xóa
+            product.splice(index, 1);
+            add();
+        }
+        function edit(index) { //hàm sửa
+            let st = '';
+            st = " <input type='text' id='editInput'>" + product[index] +
+                "<button onclick='editSave(" + index + ")'> save </button>";
+            document.getElementById('list').innerHTML = st;
+        }
+        function editSave(index) { // hàm lưu > hàm sửa
+
+            product[index] = document.getElementById('editInput').value;
+            document.getElementById('list').innerHTML = '';
+            add();
+        }
+        function add() { // hàm hiển thị
+            let str = ' <tr> ' +
+                '<td><b>product</b></td>' +
+                '<td></td> ' +
+                ' <td>' + product.length + ' product </td>  ' +
+                ' </tr>';
+            for (let i = 0; i < product.length; i++) {
+                str += "<tr><td>" + product[i] + "</td>" +
+                    " <td> <button onclick='edit(" + i + ")' >edit</button> </td>  " +
+                    " <td> <button onclick='del(" + i + ")'>delete</button> </td> ";
+            }
+            str += "</tr>";
+            list.innerHTML = str;
+        }
+    </script>
+</body>
+
+</html>

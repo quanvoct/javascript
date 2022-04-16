@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý dữ liệu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scriptOligo.js"></script>
+</head>
+
+<body>
+    <div class="card my-3 mx-auto" style="width: 50rem">
+        <div class="card-body">
+            <h1 class="text-primary text-center">Lập danh sách sản phẩm</h1>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Sequence's name</span>
+                <input type="text" class="form-control" id="name" placeholder="Tên chuỗi" autofocus>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Sequence's name</span>
+                <input type="text" class="form-control" id="string" placeholder="Nội dung chuỗi">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="wet">
+                        <label class="form-check-label" for="wet">Sấy khô trước khi giao</label>
+                      </div>
+                </div>
+                <div class="col">
+                    <select class="form-select" id="normalization">
+                        <option selected>Normalization</option>
+                        <option value="0">0 pmol/µL</option>
+                        <option value="50">50 pmol/µL</option>
+                        <option value="100">100 pmol/µL</option>
+                      </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="submit-btn">Thêm vào danh sách</button>
+            <p id="oligo-list" class="text-end"></p>
+        </div>
+    </div>
+    <script>
+        var name = document.getElementById('name');
+        var string = document.getElementById('string');
+        var wet = document.getElementById('wet');
+        var normalization = document.getElementById('normalization');
+        var oligoList = document.getElementById('oligo-list');
+        var submitBtn = document.getElementById('submit-btn');
+
+        submitBtn.addEventListener('click', function () {
+            output.innerHTML = addRow();
+        })
+
+        function addRow(name, string, wet, normalization) {
+            
+        }
+    </script>
+</body>
+
+</html>
