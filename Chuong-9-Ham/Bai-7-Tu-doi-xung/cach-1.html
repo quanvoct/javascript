@@ -34,9 +34,9 @@
             //if (a != '') {
                 console.log(a[0] + ' - ' + a[a.length - 1]);
                 if (a[0] == a[a.length - 1]) {
-                    // a = a.split('');
-                    // a.pop();
-                    // a.shift();
+                    a = a.split('');
+                    a.pop();
+                    a.shift();
                     while (a.length >1) {
                         isPalindrome(a.join(''));
                     }
