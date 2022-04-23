@@ -26,38 +26,41 @@
 </head>
 
 <body>
-    <div class="card my-3 mx-auto" style="width: 100rem">
+    <div class="card my-3 mx-auto">
         <div class="card-header">
             <h1 class="text-primary text-center">Lập danh sách sản phẩm</h1>
         </div>
         <div class="card-body">
             <form action="">
                 <div class="row p-0">
-                    <div class="col-1">
+                    <div class="col-lg-1 col-sm-3">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" id="oligo-name" placeholder="Name" autofocus>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-lg-6 col-sm-9">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" id="oligo-string" placeholder="Sequence string">
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-lg-2 col-sm-5">
                         <div class="form-check form-switch form-check-lg">
                             <input class="form-check-input" type="checkbox" id="oligo-status">
                             <label class="form-check-label" for="oligo-status">Dry before packaging</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-lg-2 col-sm-5">
                         <select class="form-select" id="oligo-normalization">
                             <option value="0" selected>0 pmol/µL</option>
                             <option value="50">50 pmol/µL</option>
                             <option value="100">100 pmol/µL</option>
                         </select>
                     </div>
-                    <div class="col-1">
-                        <button class="btn btn-primary" id="oligo-submit">Thêm</button>
+                    <div class="col-lg-1 col-sm-2">
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-block" id="oligo-submit">Thêm</button>
+                            <button class="btn btn-primary btn-block d-none" id="oligo-edit">Sửa</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -70,51 +73,54 @@
             <span class="text-danger" id="validate-form"></span>
         </div>
     </div>
-    <div class="card my-3 mx-auto" style="width: 100rem">
+    <div class="card my-3 mx-auto">
         <div class="card-body">
-            <table class="table table-striped table-hover table-sm align-middle">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Sequence</th>
-                        <th scope="col">Length</th>
-                        <th scope="col">OD</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Dry</th>
-                        <th scope="col">Normalization</th>
-                        <th scope="col">Unit Price</th>
-                        <th scope="col">Fee</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">EDD</th>
-                        <th scope="col">&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody id="oligo-list">
-                </tbody>
-            </table>
+            <div class="table-responsive-sm table-responsive-md table-responsive">
+                <table class="table table-striped table-hover table-sm align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Sequence</th>
+                            <th scope="col">Length</th>
+                            <th scope="col">OD</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Dry</th>
+                            <th scope="col">Normalization</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Fee</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">EDD</th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody id="oligo-list">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <script>
-        var oligoName = document.getElementById('oligo-name');
-        var validateForm = document.getElementById('validate-form');
-        var oligoString = document.getElementById('oligo-string');
-        var oligoStatus = document.getElementById('oligo-status');
-        var oligoNormalization = document.getElementById('oligo-normalization');
-        var oligoList = document.getElementById('oligo-list');
-        var oligoSubmit = document.getElementById('oligo-submit');
+        var oligoName = document.getElementById('oligo-name'),
+            oligoString = document.getElementById('oligo-string'),
+            oligoStatus = document.getElementById('oligo-status'),
+            oligoNormalization = document.getElementById('oligo-normalization'),
+            oligoList = document.getElementById('oligo-list'),
+            oligoSubmit = document.getElementById('oligo-submit'),
+            oligoEdit = document.getElementById('oligo-edit'),
+            validateForm = document.getElementById('validate-form');
+        var nameLength = [3, 16],
+            stringLength = [6, 14, 35, 75],
+            odList = ['1.5+', '3+', '3+'],
+            estimatedList = [];
         var productArr = [['A12', 'ATCAGCTACGACGACTAGCTCAGCTACGACTACGATCGGC', 1, 50], ['A24', 'GACTACGAGATCAGCTCAGCTAC', 0, 100], ['A13', 'GACCTACGTCAT', 1, 50], ['A42', 'GACTAGCATCAGCTACGACTACGATCAGCTACGATCAGCTACGATCAGCATCGACTA', 0, 0]];
         var list = 'T,A,C,G';
-        var nameLength = [3, 16],
-            stringLength = [6, 15, 36, 75],
-            odList = ['1.5+','3+','3+'],
-            estimatedList = []
         oligoList.innerHTML = displayOligo(productArr);
 
         oligoSubmit.addEventListener('click', function (e) {
             e.preventDefault();
             let status = (oligoStatus.checked) ? 1 : 0;
             if (validateInputArray(oligoString.value, list) == '') {
-                productArr.push(addRow(oligoName.value, oligoString.value, status, oligoNormalization.value));
+                productArr.push(createRow(oligoName.value, oligoString.value, status, oligoNormalization.value));
                 oligoList.innerHTML = displayOligo(productArr);
                 oligoName.classList.remove('border-danger');
                 validateForm.innerText = " ";
@@ -122,11 +128,11 @@
                 oligoString.value = '';
                 oligoStatus.checked = false;
                 oligoNormalization.value = 0;
-                oligoName.autofocus = true;
+                oligoName.focus();
             }
         })
 
-        oligoName.addEventListener('keyup', function () {
+        oligoName.addEventListener('change', function () {
             let array = [], text = '';
             for (let i = 0; i < productArr.length; i++) {
                 array.push(productArr[i][0]);
@@ -142,12 +148,12 @@
                     oligoSubmit.disabled = true;
                     text += 'Tên chuỗi không được trùng với tên đã nhập. ';
                     break;
-                case oligoName.value.length < minName:
+                case oligoName.value.length < nameLength[0]:
                     oligoName.classList.add('border-danger');
                     oligoSubmit.disabled = true;
                     text += 'Tên chuỗi tối thiểu phải từ ' + nameLength[0] + ' ký tự. ';
                     break;
-                case oligoName.value.length > maxName:
+                case oligoName.value.length > nameLength[1]:
                     oligoName.classList.add('border-danger');
                     oligoSubmit.disabled = true;
                     text += 'Tên chuỗi tối đa phải dưới ' + nameLength[1] + ' ký tự. ';
@@ -160,7 +166,7 @@
             validateForm.innerText = text;
         })
 
-        oligoString.addEventListener('keyup', function () {
+        oligoString.addEventListener('change', function () {
             let text = '';
             switch (true) {
                 case oligoString.value.replace(/\s/g, '') == "":
@@ -172,10 +178,10 @@
                     oligoString.classList.add('border-danger');
                     oligoSubmit.disabled = true;
                     text += 'Chuỗi Oligo tối thiểu phải từ ' + stringLength[0] + ' base. ';
-                case oligoString.value.replace(/\s/g, '').length > stringLength[stringLength.length-1]:
+                case oligoString.value.replace(/\s/g, '').length > stringLength[stringLength.length - 1]:
                     oligoString.classList.add('border-danger');
                     oligoSubmit.disabled = true;
-                    text += 'Chuỗi Oligo tối đa phải dưới ' + stringLength[stringLength.length-1] + ' base. ';
+                    text += 'Chuỗi Oligo tối đa phải dưới ' + stringLength[stringLength.length - 1] + ' base. ';
                 case validateInputArray(oligoString.value.replace(/\s/g, ''), list) != '':
                     oligoString.classList.add('border-danger');
                     oligoSubmit.disabled = true;
@@ -190,13 +196,49 @@
             validateForm.innerText = text;
         })
 
-        function addRow(name, sequence, dry, normalization) {
+        function createRow(name, sequence, dry, normalization) {
+            console.log(name + ' - ' + sequence + ' - ' + dry + ' - ' + normalization)
             let array = [];
             let tempDry = (dry) ? 1 : 0;
             name = name.replace(/\s/g, '').toUpperCase();
             sequence = sequence.replace(/\s/g, '').toUpperCase();
             array.push(name, sequence, tempDry, normalization);
             return array;
+        }
+
+        function editRow(num) {
+            oligoName.value = productArr[num][0];
+            oligoName.disabled = true;
+            oligoString.value = productArr[num][1];
+            oligoStatus.checked = (productArr[num][2] == 1) ? true : false;
+            oligoNormalization.value = productArr[num][3];
+            oligoEdit.classList.remove('d-none');
+            oligoSubmit.classList.add('d-none');
+            oligoEdit.addEventListener('click', function (e) {
+                e.preventDefault();
+                let status = (oligoStatus.checked) ? 1 : 0;
+                if (validateInputArray(oligoString.value, list) == '') {
+                    productArr[num] = createRow(oligoName.value, oligoString.value, status, oligoNormalization.value);
+                    oligoList.innerHTML = displayOligo(productArr);
+                    oligoName.classList.remove('border-danger');
+                    oligoEdit.classList.add('d-none');
+                    oligoSubmit.classList.remove('d-none');
+                    validateForm.innerText = " ";
+                    oligoName.value = '';
+                    oligoName.disabled = false;
+                    oligoString.value = '';
+                    oligoStatus.checked = false;
+                    oligoNormalization.value = 0;
+                    oligoName.focus();
+                }
+            })
+        }
+
+        function removeRow(value) {
+            if (confirm('Xác nhận trước khi xóa?')) {
+                productArr.splice(value, 1);
+                oligoList.innerHTML = displayOligo(productArr);
+            }
         }
 
         function dmYFormat(value) {
@@ -213,19 +255,19 @@
                 const d = new Date();
                 let time = d.getTime();
                 switch (true) {
-                    case (arr2ways[i][1].length >= stringLength[0] && arr2ways[i][1].length <= stringLength[1]):
+                    case (!isNaN(stringLength[1]) && arr2ways[i][1].length >= stringLength[0] && arr2ways[i][1].length <= stringLength[1]):
                         od = '1.5+';
                         type = 'PremiumOligo.00';
                         eDD = dmYFormat(new Date(48600000 * 2 + time));
                         unitPrice = 4300;
                         break;
-                    case (arr2ways[i][1].length > stringLength[1] && arr2ways[i][1].length <= stringLength[2]):
+                    case (!isNaN(stringLength[2]) && arr2ways[i][1].length > stringLength[1] && arr2ways[i][1].length <= stringLength[2]):
                         od = '3+';
                         type = 'PremiumOligo.01';
                         eDD = dmYFormat(new Date(48600000 * 2 + time));
                         unitPrice = 4300;
                         break;
-                    case (isNaN(stringLength[3]) && arr2ways[i][1].length > stringLength[2] && arr2ways[i][1].length <= stringLength[3]):
+                    case (!isNaN(stringLength[3]) && arr2ways[i][1].length > stringLength[2] && arr2ways[i][1].length <= stringLength[3]):
                         od = '3+';
                         type = 'PremiumOligo.02';
                         eDD = dmYFormat(new Date(48600000 * 3 + time));
@@ -249,9 +291,9 @@
                             <td scope="col" class="text-end">${fee.toLocaleString()}</td>
                             <td scope="col" class="text-end">${total.toLocaleString()}</td>
                             <td scope="col class="text-center"">${eDD}</td>
-                            <td scope="col class="text-center""><button class="btn btn-light"><i class="fa-solid fa-pencil"></i></button></td>
-                            <td scope="col class="text-center""><button class="btn btn-light"><i class="fa-solid fa-trash"></i></button></td>
-                          </tr>`;
+                            <td scope="col class="text-center""><button class="btn btn-light" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button></td>
+                            <td scope="col class="text-center""><button class="btn btn-light" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>`;
             }
             return str;
         }

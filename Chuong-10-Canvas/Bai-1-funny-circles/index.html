@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funny canvas</title>
+</head>
+
+<body>
+    <canvas id="canvas-frame" width="600" height="400" style="border: 1px solid blue"></canvas>
+    <script>
+        var canvasFrame = document.getElementById('canvas-frame');
+        var ctx = canvasFrame.getContext("2d");
+        var skyGradient = ctx.createLinearGradient(0, 200, 0, 0);
+        var seaGradient = ctx.createLinearGradient(600, 00, 400, 600);
+        skyGradient.addColorStop(0, "rgba(244,215,21,1)");
+        skyGradient.addColorStop(0.20, "rgba(255,124,0,1");
+        skyGradient.addColorStop(0.89, "rgba(255,177,255,1");
+
+        seaGradient.addColorStop(0, "#ff0000");
+        seaGradient.addColorStop(0.6, "#ff7100");
+        seaGradient.addColorStop(1, "#f4a815");
+        //sky
+        ctx.fillStyle = skyGradient;
+        ctx.fillRect(0, 0, 600, 400);
+        //Sun
+        ctx.beginPath();
+        ctx.arc(300, 200, 60, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(255,255,50,0.95";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(300, 200, 80, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(255,255,150,0.5)";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(300, 200, 110, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(255,255,250,0.1)";
+        ctx.fill();
+        //Sea
+        ctx.beginPath();
+        ctx.fillStyle = seaGradient;
+        ctx.fillRect(0, 225, 600, 400);
+        //line
+        ctx.beginPath();
+        ctx.moveTo(400, 300);
+        ctx.lineTo(300, 300);
+        ctx.stroke();
+        //text
+        // ctx.beginPath();
+        // ctx.font = "60pt Arial";
+        // ctx.lineWidth = 3;
+        // ctx.fillStyle = "#0000ff";
+        // ctx.fillText('BlueSea', 150, 300);
+    </script>
+</body>
+
+</html>

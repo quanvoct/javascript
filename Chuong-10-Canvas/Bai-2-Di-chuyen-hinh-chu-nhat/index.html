@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Di chuyển hình chữ nhật trong canvas</title>
+</head>
+
+<body>
+    <canvas id="moveRectangle" width="600" height="400" style="border: 1px solid #ff0000"></canvas>
+    <script>
+        var moveRectangle = document.getElementById('moveRectangle');
+        rectangle = moveRectangle.getContext('2d');
+
+        rectangle.fillStyle = '#0000ff';
+        rectangle.fillRect(30, 20, 150, 100);
+
+        var vitriY = 20,
+            speed = 1;
+        function move() {
+            rectangle.clearRect(30, vitriY, 150, 100);
+            if (vitriY >= 300) speed = -1;
+            if(vitriY <= 0) speed = 1;
+            vitriY += speed;
+            rectangle.beginPath();
+            rectangle.fillStyle = '#0000ff';
+            rectangle.fillRect(30, vitriY, 150, 100);
+        }
+        setInterval(move, 10);
+    </script>
+</body>
+
+</html>
