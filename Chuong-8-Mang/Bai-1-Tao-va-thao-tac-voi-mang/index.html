@@ -8,7 +8,7 @@
 </head>
 <body>
     <input type="text" id="value" onchange="modify(this)"/>
-    <input type="button" id="btnAdd" value="Add" onclick="addElement();"/>
+    <input type="button" id="btnAdd" value="Add" onclick="addElement()"/>
     <div id="result"></div>
     <script>
         var result = document.getElementById('result');
@@ -18,7 +18,7 @@
         function modify(obj) {
             element = obj.value;
         }
-        function addElement(params) {
+        function addElement() {
             array.push(element);
             value.innerHTML = '';
             let str = '';
