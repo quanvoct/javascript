@@ -1,4 +1,3 @@
-
 var oligoName = document.getElementById('oligo-name'),
     oligoString = document.getElementById('oligo-string'),
     oligoStatus = document.getElementById('oligo-status'),
@@ -9,8 +8,7 @@ var oligoName = document.getElementById('oligo-name'),
     oligoStatusLabel = document.getElementById('oligo-status-label'),
     validateForm = document.getElementById('validate-form'),
     stringCounter = document.getElementById('string-counter'),
-
-    list = document.getElementById('name-length').innerHTML.split(","),
+    
     nameLength = document.getElementById('name-length').innerHTML.split(","),
     stringLength = document.getElementById('string-length').innerHTML.split(","),
     odList = document.getElementById('od-list').innerHTML.split(","),
@@ -52,9 +50,13 @@ oligoName.addEventListener('change', function () {
 })
 
 oligoString.addEventListener('change', function () {
-    let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
-    validateForm.innerHTML = validateOligo(oName, oString);
+    if (oligoName.disabled = true) {
+        validateForm.innerHTML = validateOligo(null, oString);
+    } else {
+        let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
+            oString = oligoString.value.replace(/\s/g, '').toUpperCase();
+        validateForm.innerHTML = validateOligo(oName, oString);
+    }
 })
 
 oligoString.addEventListener('keyup', function () {
@@ -120,29 +122,31 @@ function validateOligo(name, string) {
     for (let i = 0; i < productArr.length; i++) {
         array.push(productArr[i][0]);
     }
-    switch (true) {
-        case name == "":
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>${noEmptyName}</li>`;
-            break;
-        case array.includes(name):
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>${existName}</li>`;
-            break;
-        case name.length < nameLength[0]:
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>${minNameLength}${nameLength[0]}${letter}</li>`;
-        case name.length > nameLength[1]:
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>${maxnameLength}${nameLength[1]}${letter}</li>`;
-            break;
-        default:
-            oligoName.classList.remove('border-danger');
-            oligoSubmit.disabled = false;
+    if (name != null) {
+        switch (true) {
+            case name == "":
+                oligoName.classList.add('border-danger');
+                oligoSubmit.disabled = true;
+                text += `<li>${noEmptyName}</li>`;
+                break;
+            case array.includes(name):
+                oligoName.classList.add('border-danger');
+                oligoSubmit.disabled = true;
+                text += `<li>${existName}</li>`;
+                break;
+            case name.length < nameLength[0]:
+                oligoName.classList.add('border-danger');
+                oligoSubmit.disabled = true;
+                text += `<li>${minNameLength}${nameLength[0]}${letter}</li>`;
+            case name.length > nameLength[1]:
+                oligoName.classList.add('border-danger');
+                oligoSubmit.disabled = true;
+                text += `<li>${maxnameLength}${nameLength[1]}${letter}</li>`;
+                break;
+            default:
+                oligoName.classList.remove('border-danger');
+                oligoSubmit.disabled = false;
+        }
     }
     switch (true) {
         case string == "":
