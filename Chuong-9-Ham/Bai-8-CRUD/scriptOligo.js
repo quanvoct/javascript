@@ -43,29 +43,27 @@ oligoSubmit.addEventListener('click', function (e) {
     }
 })
 
+
+
 oligoName.addEventListener('change', function () {
-    let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
-    validateForm.innerHTML = validateOligo(oName, oString);
+let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
+    oString = oligoString.value.replace(/\s/g, '').toUpperCase();
+validateForm.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('change', function () {
-    if (oligoName.disabled = true) {
-        validateForm.innerHTML = validateOligo(null, oString);
-    } else {
-        let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-            oString = oligoString.value.replace(/\s/g, '').toUpperCase();
-        validateForm.innerHTML = validateOligo(oName, oString);
-    }
+let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
+    oString = oligoString.value.replace(/\s/g, '').toUpperCase();
+validateForm.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('keyup', function () {
-    if (oligoString.value.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
-        stringCounter.classList.remove('d-none');
-        stringCounter.innerText = oligoString.value.replace(/\s/g, '').toUpperCase().length;
-    } else {
-        stringCounter.classList.add('d-none');
-    }
+if (oligoString.value.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
+    stringCounter.classList.remove('d-none');
+    stringCounter.innerText = oligoString.value.replace(/\s/g, '').toUpperCase().length;
+} else {
+    stringCounter.classList.add('d-none');
+}
 })
 
 
