@@ -43,8 +43,6 @@ oligoSubmit.addEventListener('click', function (e) {
     }
 })
 
-
-
 oligoName.addEventListener('change', function () {
 let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
     oString = oligoString.value.replace(/\s/g, '').toUpperCase();
@@ -65,7 +63,6 @@ if (oligoString.value.replace(/\s/g, '').toUpperCase().length > stringLength[str
     stringCounter.classList.add('d-none');
 }
 })
-
 
 oligoEdit.addEventListener('click', function (e) {
     e.preventDefault();
