@@ -26,24 +26,23 @@
         var output = document.getElementById('output');
         input.addEventListener('keyup', function () {
             let num = input.value
-            output.innerText = (isPalindrome(num))?'Phải':'Không phải';
+            output.innerText = (isPalindrome(num)) ? 'Phải' : 'Không phải';
             console.log(num);
         })
-        
+
         function isPalindrome(a) {
-            //if (a != '') {
-                console.log(a[0] + ' - ' + a[a.length - 1]);
+            if (a.length <= 1) {
+                return true;
+            } else {
                 if (a[0] == a[a.length - 1]) {
                     a = a.split('');
                     a.pop();
                     a.shift();
-                    while (a.length >1) {
-                        isPalindrome(a.join(''));
-                    }
+                    return isPalindrome(a.join(''));
                 } else {
                     return false;
                 }
-            //}
+            }
         }
     </script>
 </body>
