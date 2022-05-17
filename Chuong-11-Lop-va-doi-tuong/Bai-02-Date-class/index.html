@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Date</title>
+</head>
+
+<body>
+    <script src="classDate.js"></script>
+    <script>
+        let date = new MyDate(2, 2, 2007);
+        let day = date.getDay(); // 2
+        let month = date.getMonth(); // 2
+        let year = date.getYear(); // 2007
+        console.log(day + "/" + month + "/" + year);
+        date.setDay(10);
+        date.setMonth(10);
+        date.setYear(2019);
+        day = date.getDay(); // 10
+        month = date.getMonth(); // 10
+        year = date.getYear(); // 2019
+        console.log(day + "/" + month + "/" + year);
+    </script>
+</body>
+
+</html>
