@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo lớp hình tròn</title>
+    <style>
+        #canvas {
+            position: absolute;
+            left: 50%;
+            margin-left: -512px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script src="classCircle.js"></script>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext("2d");
+        canvas.width = 1024;
+        canvas.height = 512;
+        var circle = new Circle(Math.random() * 1024, Math.random() * 512, Math.random() * 100 + 1, 'red');
+        console.log('Diện tích: ' + circle.getArea());
+        console.log('Chu vi: ' + circle.getPerimeter());
+    </script>
+</body>
+
+</html>
