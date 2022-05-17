@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo canvas</title>
+    <style>
+        #game-view {
+            position: absolute;
+            left: 50%;
+            margin-left: -300px;
+            top: 50%;
+            margin-top: -200px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="game-view" width="600" height="400"></canvas>
+    <script>
+        var gameView = document.getElementById("game-view");
+        var context = gameView.getContext("2d");
+
+        //Vẽ đường thẳng
+        context.moveTo(0, 0);
+        context.lineTo(200, 100);
+        context.stroke();
+
+        //Vẽ đường tròn
+        context.beginPath();
+        context.arc(95, 50, 40, 0, 2 * Math.PI);
+        context.stroke();
+
+        //Thêm text
+        context.beginPath();
+        context.font = "30px Arial";
+        context.fillText("Hello World", 10, 50);
+        context.strokeText("Hello World", 10, 50);
+
+        //Đổ màu gradient linear
+
+        // Create gradient
+        var gradient = context.createLinearGradient(0, 0, 200, 0);
+        gradient.addColorStop(0, "red");
+        gradient.addColorStop(1, "white");
+
+        // Fill with gradient
+        context.beginPath();
+        context.fillStyle = gradient;
+        context.fillRect(10, 10, 150, 80);
+
+        //Đổ màu gradient circle
+
+        // Create gradient
+        var gradient = context.createRadialGradient(125, 90, 5, 90, 60, 100);
+        gradient.addColorStop(0, "blue");
+        gradient.addColorStop(1, "purple");
+
+        // Fill with gradient
+        context.beginPath();
+        context.fillStyle = gradient;
+        context.fillRect(100, 100, 150, 80);
+    </script>
+</body>
+
+</html>

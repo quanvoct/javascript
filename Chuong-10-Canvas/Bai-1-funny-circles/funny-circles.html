@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funny Circles</title>
+    <style>
+        #canvas {
+            position: absolute;
+            left: 50%;
+            margin-left: -512px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext("2d");
+        canvas.width = 1024;
+        canvas.height = 512;
+        var speed = 1,
+            rad = 0,
+            opacity = 1,
+            circle = [],
+            circleCount = Math.floor(Math.random() * 20 +2);
+
+        for (let i = 0; i < circleCount; i++) {
+            let array = [];
+            array.push(Math.floor(Math.random() * 1024), Math.floor(Math.random() * 512));
+            circle.push(array);
+        }
+        function sleep(milliseconds) {
+            const date = Date.now();
+            let currentDate = null;
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < milliseconds);
+        }
+        function drawSky() {
+            // Create gradient
+            let gradient = context.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, "#AADBEA");
+            gradient.addColorStop(1, "#FEF1E1");
+            // Fill with gradient
+            context.beginPath();
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        function createCircle(x, y, r, a) {
+            // Create gradient
+            let gradient = context.createRadialGradient(x, y, 0, x, y, r + 50);
+            gradient.addColorStop(0, `rgba(255,255,255,0)`);
+            gradient.addColorStop(1, `rgba(255,255,255,${a})`);
+            // Fill with gradient
+            context.beginPath();
+            context.arc(x, y, r, 0, 2 * Math.PI);
+            context.fillStyle = gradient;
+            context.fill();
+        }
+        function animateCircles() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            rad += speed;
+            opacity -= 0.01;
+            drawSky();
+            if (opacity <= 0) {
+                rad = 0;
+                opacity = 1;
+                random = Math.random();
+                circle.length = 0;
+                for (let i = 0; i < circleCount; i++) {
+                    let array = [];
+                    array.push(Math.floor(Math.random() * 1024), Math.floor(Math.random() * 512));
+                    circle.push(array);
+                }
+            }
+            for (let i = 0; i < circleCount; i++) {
+                createCircle(circle[i][0], circle[i][1], rad, opacity);
+            }
+        }
+        setInterval(animateCircles, 10);
+    </script>
+</body>
+
+</html>

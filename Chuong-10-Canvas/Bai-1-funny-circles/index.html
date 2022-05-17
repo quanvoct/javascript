@@ -44,31 +44,15 @@
         ctx.beginPath();
         ctx.fillStyle = seaGradient;
         ctx.fillRect(0, 225, 600, 400);
-        //line
-        ctx.beginPath();
-        ctx.moveTo(400, 300);
-        ctx.lineTo(300, 300);
-        ctx.stroke();
-        //line
-        ctx.beginPath();
-        ctx.moveTo(400, 350);
-        ctx.lineTo(300, 350);
-        ctx.stroke();
-        //line
-        ctx.beginPath();
-        ctx.moveTo(400, 300);
-        ctx.lineTo(300, 300);
-        ctx.stroke();
-        //line
-        ctx.beginPath();
-        ctx.moveTo(400, 300);
-        ctx.lineTo(300, 300);
-        ctx.stroke();
-        //line
-        ctx.beginPath();
-        ctx.moveTo(400, 300);
-        ctx.lineTo(300, 300);
-        ctx.stroke();
+        for (let i = 0; i < 15; i++) {
+            //line
+            let randa = Math.floor(Math.random() * 100);
+            let randb = Math.floor(Math.random() * 100);
+            ctx.beginPath();
+            ctx.moveTo(randa * 6, randb + 250);
+            ctx.lineTo(randa + randb + 200, randb + 250);
+            ctx.stroke();
+        }
         //text
         // ctx.beginPath();
         // ctx.font = "60pt Arial";
