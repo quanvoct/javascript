@@ -33,13 +33,7 @@
             array.push(Math.floor(Math.random() * 1024), Math.floor(Math.random() * 512));
             circle.push(array);
         }
-        function sleep(milliseconds) {
-            const date = Date.now();
-            let currentDate = null;
-            do {
-                currentDate = Date.now();
-            } while (currentDate - date < milliseconds);
-        }
+        
         function drawSky() {
             // Create gradient
             let gradient = context.createLinearGradient(0, 0, 0, canvas.height);

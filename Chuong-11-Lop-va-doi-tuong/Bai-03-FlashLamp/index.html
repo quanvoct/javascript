@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashLamp</title>
+    <style>
+        #canvas {
+            position: absolute;
+            left: 50%;
+            margin-left: -500px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" style="border: 1px solid #999;"></canvas>
+    <button id="switcher" onclick="switchFlashLamp()">Bật đèn</button>
+    <script src="classBattery.js"></script>
+    <script src="classFlashLamp.js"></script>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            switcher = document.getElementById('switcher'),
+            context = canvas.getContext("2d");
+        canvas.width = 1000;
+        canvas.height = 500;
+
+        let battery = new Battery();
+        battery.setEnergy(1000);
+
+        let flashLamp = new FlashLamp();
+        flashLamp.setBattery(battery.getEnergy());
+        flashLamp.turnOff();
+        flashLamp.drawFlashLamp(flashLamp.getBatteryInfo(), flashLamp.light());
+
+        function switchFlashLamp() {
+            if (flashLamp.light()) {
+                flashLamp.turnOff();
+            } else {
+                flashLamp.turnOn();
+            }
+        }
+        var speed = 1;
+        function work() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            if (flashLamp.light()) {
+                if (flashLamp.getBatteryInfo() <= 0) {
+                    flashLamp.turnOff();
+                } else {
+                    battery.setEnergy(battery.getEnergy() - speed);
+                    flashLamp.setBattery(battery.getEnergy());
+                }
+                flashLamp.drawFlashLamp(flashLamp.getBatteryInfo(), flashLamp.light());
+            } else {
+                flashLamp.drawFlashLamp(flashLamp.getBatteryInfo(), flashLamp.light());
+            }
+        }
+        setInterval(work, 10);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final game</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <!-- ĐƯờng dẫn tương đối -->
+    <img src="./images/balloon.png" alt="Khinh khí cầu" id="balloon" style="display: none;">
+    <script src="js/Balloon.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/Bush.js"></script>
+    <script src="js/Tree.js"></script>
+    <script src="js/Gas.js"></script>
+    <script>
+        img = document.getElementById('balloon');
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext("2d");
+        canvas.width = window.innerWidth - 20;
+        canvas.height = window.innerHeight - 20;
+        var treeCount = 5,
+            bushCount = 7,
+            speed = 1,
+            energy = 10000,
+        yBalloon = 0;
+        var game = new Game(treeCount, bushCount);
+        var balloon = new Balloon(yBalloon, img);
+        var bush = new Bush(0, game.getBushParameter());
+        var tree = new Tree(0, game.getBushParameter(), game.getRootParameter());
+        balloon.setEnergy(energy);
+        balloon.turnOff();
+        function generateTree(game) {
+            for (let i = 0; i < game.getBushArray(); i++) {
+                bush.drawBush(game.getBushArray()[i], context, game.getColor());
+            }
+            for (let i = 0; i < game.getTreeArray(); i++) {
+                tree.drawTree(game.getTreeArray()[i], context, game.getColor());
+            }
+        }
+        canvas.addEventListener('mousedown', function () {
+            console.log(balloon.fire());
+            balloon.turnOn();
+        });
+        canvas.addEventListener('mouseup', function () {
+            balloon.turnOff();
+        });
+        function animateGame() {
+            if (balloon.fire()) {
+                balloon.setCoordinates(yBalloon += speed * 2);
+                balloon.setEnergy(energy-=speed);
+            } else {
+                yBalloon = (yBalloon >= 0) ? yBalloon + speed * 3 : 0;
+                balloon.setCoordinates(yBalloon);
+            }
+            game.drawBackground(context);
+            balloon.drawBalloon(context);
+            balloon.drawEnergyBar(context);
+            generateTree(game);
+        }
+        setInterval(animateGame, 100);
+    </script>
+</body>
+
+</html>
