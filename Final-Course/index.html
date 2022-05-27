@@ -53,14 +53,6 @@
                 bush.drawBush(game.getBushArray()[i] + x, context, game.getColor());
             }
         }
-        function checkCollision(balloonArray, bushArray) {
-            //kiểm tra từng vòng tròn của balloon có va chạm với từng hình chữ nhật của bụi cây hay không
-            for (let i = 0; i < balloonArray.length; i++) {
-                for (let j = 0; j < bushArray[0].length; j++) {
-                    console.log(bushArray[0][j]);
-                }
-            }
-        }
         canvas.addEventListener('mousedown', function () {
             if (balloon.getEnergyInfo() > 0) {
                 balloon.turnOn();
@@ -98,14 +90,13 @@
                 }
                 balloon.setCoordinates(yBalloon -= speed);
             }
-            checkCollision();
-            // if (game.getStatus()) {
-            //     if (yBalloon <= 2) {
-            //         game.drawWin(gameScore);
-            //     } else {
-            //         game.drawLose(gameScore);
-            //     }
-            // }
+            if (game.getStatus()) {
+                if (yBalloon <= 2) {
+                    game.drawWin(gameScore);
+                } else {
+                    game.drawLose(gameScore);
+                }
+            }
         }
         setInterval(animateGame, 10);
     </script>
