@@ -1,8 +1,7 @@
 class Tree {
     constructor(x, bushParameter, rootParameter) {
         this.x = x;
-        this.y = canvas.height - 255;
-        console.log(canvas.width, canvas.height);
+        this.y = canvas.height - 265;
         this.parameter = [];
         for (let i = 0; i < 4; i++) {
             let m = [];

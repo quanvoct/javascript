@@ -1,7 +1,7 @@
 class Bush {
     constructor(x, bushParameter) {
         this.x = x;
-        this.y = canvas.height - 200;
+        this.y = canvas.height - 190;
         this.parameter = [];
         for (let i = 0; i < bushParameter.length; i++) {
             let m = [];
@@ -25,20 +25,20 @@ class Bush {
                 if (i == 0) {
                     context.fillStyle = color[4];
                     context.fillRect(
-                        this.parameter[i][j][0]+this.x+x, //x
-                        this.parameter[i][j][1]+this.y, //y
+                        this.parameter[i][j][0] + this.x + x, //x
+                        this.parameter[i][j][1] + this.y, //y
                         this.parameter[i][j][2], //width
                         this.parameter[i][j][3]  //height
                     )
                 } else if (i == 1) {
                     context.fillStyle = color[2];
                     context.fillRect(
-                        this.parameter[i][j][0]+this.x+x,
-                        this.parameter[i][j][1]+this.y,
+                        this.parameter[i][j][0] + this.x + x,
+                        this.parameter[i][j][1] + this.y,
                         this.parameter[i][j][2],
                         this.parameter[i][j][3]
                     )
-                } else break;
+                }
             }
         }
     }

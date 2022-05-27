@@ -1,7 +1,8 @@
 class Game {
-    constructor(treeCount, bushCount) {
+    constructor(audio, score, img, treeCount, bushCount) {
         this.x = 0;
         this.location = Math.random();
+        this.status = false;
         this.bushParameter = [ //thông số của các tàng cây
             [ //màu xanh tối
                 [0, 49.046, 2, 12.259],
@@ -155,19 +156,28 @@ class Game {
             '#7f4d2e', // nâu đậm
             '#945835', // nâu nhạt
         ];
-        this.random = Math.floor(Math.random() * 200 - 100);
+        this.randoma = Math.floor(Math.random() * 200 - 100);
+        this.randomb = Math.floor(Math.random() * 400 - 100);
         this.bushArray = [];
-        for (let i = 1; i < bushCount; i++) {
-            let a = canvas.width/treeCount * i + this.random;
+        for (let i = 2; i < bushCount; i++) {
+            let a = 400 * i - this.randoma;
             this.bushArray.push(a);
         }
         this.treeArray = [];
-        for (let i = 1; i < treeCount; i++) {
-            let a = canvas.width/treeCount * i + this.random;
+        for (let i = 2; i < treeCount; i++) {
+            let a = 600 * i + this.randomb;
             this.treeArray.push(a);
         }
+        this.score = score;
+        this.img = img;
+        this.audio = audio;
     }
-
+    setScore(score) {
+        this.score = score;
+    }
+    getScore(score) {
+        return this.score;
+    }
     getBushArray() {
         return this.bushArray;
     }
@@ -183,8 +193,18 @@ class Game {
     getColor() {
         return this.color;
     }
-    setCoordinates(x){
+    setCoordinates(x) {
         this.x = x;
+    }
+    getStatus() {
+        return this.status;
+    }
+    playGame() {
+        this.status = true;
+        this.audio.play();
+    }
+    stopGame() {
+        this.status = false;
     }
     drawBackground(context) {
         let h1 = 0, h2 = 0, h3 = 0, detail = 2, x = this.x;
@@ -202,38 +222,64 @@ class Game {
             gradient.addColorStop(1, `rgba(255,255,255,0)`);
             context.beginPath();
             context.fillStyle = gradient;
-            context.fillRect(i * detail * 10+x, canvas.height - 400 + 10 * h1, detail * 10, 400 + 10 * h1);
+            context.fillRect(i * detail * 10 + x, canvas.height - 400 + 10 * h1, detail * 10, 400 + 10 * h1);
             //Bottom sky
             context.beginPath();
             context.fillStyle = this.color[1];
-            context.fillRect(i * detail * 10+x, canvas.height - 300 + 10 * h2, detail * 10, 300 + 10 * h2);
+            context.fillRect(i * detail * 10 + x, canvas.height - 300 + 10 * h2, detail * 10, 300 + 10 * h2);
             //Horizontal
             context.beginPath();
             context.fillStyle = this.color[2];
-            context.fillRect(i * detail * 10+x, canvas.height - 120, detail * 10, 120);
+            context.fillRect(i * detail * 10 + x, canvas.height - 120, detail * 10, 120);
             //Ground
             context.beginPath();
             context.fillStyle = this.color[3];
-            context.fillRect(i * detail * 10+x, canvas.height - 110 + 10 * h3, detail * 10, 110 + 10 * h3);
+            context.fillRect(i * detail * 10 + x, canvas.height - 110 + 10 * h3, detail * 10, 110 + 10 * h3);
             //Top underground
             context.beginPath();
             context.fillStyle = this.color[5];
             let w = (i % 3 == 0) ? h1 : 1;
-            context.fillRect(i * detail * 10+x, canvas.height - 80 + 10 * w, detail * 10, 80 + 10 * w);
+            context.fillRect(i * detail * 10 + x, canvas.height - 80 + 10 * w, detail * 10, 80 + 10 * w);
             //Middle underground
             context.beginPath();
             context.fillStyle = this.color[6];
-            context.fillRect(i * detail * 10+x, canvas.height - 70 + 10 * h2, detail * 10, 20 + 10 * h2);
+            context.fillRect(i * detail * 10 + x, canvas.height - 70 + 10 * h2, detail * 10, 20 + 10 * h2);
 
+            //Score
+            context.textAlign = "left";
+            context.fillStyle = '#fff';
+            context.font = "20px 'Press Start 2P'";
+            context.fillText("Score", canvas.width - 200, 45);
+            context.fillText(this.score, canvas.width - 90, 45);
             if (i % 400 == 0) {
                 let x = i;
                 let y = this.location * (canvas.height / 10);
-                let cloud = new Image();
-                cloud.onload = () => {
-                    // context.drawImage(cloud, x, y, 130, 65);
-                }
-                cloud.src = './images/cloud.png';
+                // context.drawImage(this.img, x, y, 130, 65);
             }
         }
+    }
+    drawWin(score) {
+        //Win
+        context.fillStyle = '#fff';
+        context.textAlign = "center";
+        context.font = "20px 'Press Start 2P'";
+        context.fillText("YOU WIN!", canvas.width / 2, canvas.height / 2 - 100);
+        context.fillText("Your flight is long:", canvas.width / 2, canvas.height / 2 - 50);
+        context.font = "30px 'Press Start 2P'";
+        context.fillStyle = '#ffff00';
+        context.fillText(score + " miles", canvas.width / 2, canvas.height / 2);
+    }
+    drawLose(score) {
+        //Lose
+        context.fillStyle = this.color[5];
+        context.textAlign = "center";
+        context.font = "20px 'Press Start 2P'";
+        context.fillText("YOU LOSE!", canvas.width / 2, canvas.height / 2 - 150);
+        context.fillText("You have an accident at:", canvas.width / 2, canvas.height / 2 - 100);
+        context.font = "30px 'Press Start 2P'";
+        context.fillStyle = '#ffff00';
+        context.fillText(score + " miles", canvas.width / 2, canvas.height / 2-50);
+        context.font = "15px 'Press Start 2P'";
+        context.fillText("Press ENTER to retry", canvas.width / 2, canvas.height / 2);
     }
 }
