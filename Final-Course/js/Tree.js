@@ -1,63 +1,54 @@
 class Tree {
-    constructor(x, bushParameter, rootParameter) {
+    constructor(x, img, count) {
         this.x = x;
-        this.y = canvas.height - 265;
-        this.parameter = [];
-        for (let i = 0; i < 4; i++) {
-            let m = [];
-            for (let j = 0; j < bushParameter.length; j++) {
-                let n = [];
-                for (let k = 0; k < bushParameter[j].length; k++) {
-                    let o = [];
-                    for (let l = 0; l < bushParameter[j][k].length; l++) {
-                        if (i < 3) {
-                            o.push(bushParameter[j][k][l]);
-                        }
-                        else {
-                            if (k < 11) o.push(rootParameter[j][k][l]);
-                        }
-                    }
-                    if (i == 1) {
-                        o[0] += 48;
-                        o[1] -= 46;
-                    } else if (i == 2) {
-                        o[0] += 120;
-                        o[1] -= 10;
-                    }
-                    n.push(o);
-                }
-                m.push(n);
-            }
-            this.parameter.push(m);
+        this.y = canvas.height - 250;
+        this.width = 145;
+        this.height = 140;
+        this.count = count;
+        this.img = img;
+        this.treeArray = [];
+        this.random = Math.floor(Math.random() * 200 + 1);
+        for (let i = 2; i < this.count; i++) {
+            if (i % 5 == 0) continue;
+            let a = 300 * i + this.random;
+            this.treeArray.push(a);
         }
     }
-    getParameter() {
-        return this.parameter;
+    setLocation(x) {
+        this.x = x;
     }
+    getCoordinates() {
+        this.coordinates = [];
+        for (let i = 0; i < this.treeArray.length; i++) {
+            let a = [];
+            a.push(this.x + 45 + this.treeArray[i]);
+            a.push(this.y + 40);
+            a.push(35);
+            this.coordinates.push(a);
 
-    drawTree(x, context, color) {
-        for (let i = 0; i < this.parameter.length; i++) {
-            for (let j = 0; j < this.parameter[i].length; j++) {
-                for (let k = 0; k < this.parameter[i][j].length; k++) {
-                    if (j == 0) {
-                        context.fillStyle = (i < this.parameter.length - 1) ? color[4] : color[5];
-                        context.fillRect(
-                            this.parameter[i][j][k][0] + this.x + x, //x
-                            this.parameter[i][j][k][1] + this.y, //y
-                            this.parameter[i][j][k][2], //width
-                            this.parameter[i][j][k][3]  //height
-                        )
-                    } else if (j == 1) {
-                        context.fillStyle = (i < this.parameter.length - 1) ? color[2] : color[6];
-                        context.fillRect(
-                            this.parameter[i][j][k][0] + this.x + x,
-                            this.parameter[i][j][k][1] + this.y,
-                            this.parameter[i][j][k][2],
-                            this.parameter[i][j][k][3]
-                        )
-                    } else break;
-                }
-            }
+            let b = [];
+            b.push(this.x + 105 + this.treeArray[i]);
+            b.push(this.y + 35);
+            b.push(35);
+            this.coordinates.push(b);
+
+            let c = [];
+            c.push(this.x + 15 + this.treeArray[i]);
+            c.push(this.y + 85);
+            c.push(15);
+            this.coordinates.push(c);
+        }
+        return this.coordinates;
+    }
+    drawTree(context) {
+        for (let i = 0; i < this.treeArray.length; i++) {
+            context.beginPath();
+            context.drawImage(this.img, this.x + this.treeArray[i], this.y, this.width, this.height);
+            context.fillStyle = 'rgba(255,255,255,0.3)';
+            context.arc(this.x + 45 + this.treeArray[i], this.y + 40, 35, 0, 2 * Math.PI);
+            context.arc(this.x + 105 + this.treeArray[i], this.y + 35, 35, 0, 2 * Math.PI);
+            context.arc(this.x + 15 + this.treeArray[i], this.y + 85, 15, 0, 2 * Math.PI);
+            context.fill();
         }
     }
 }

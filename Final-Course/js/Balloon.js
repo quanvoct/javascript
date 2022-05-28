@@ -14,7 +14,7 @@ class Balloon {
         this.y = canvas.height - 265 - y;
     }
     getCoordinates() {
-        return a = [
+        return [
             [this.x + 50, this.y + 130, 20],
             [this.x + 50, this.y + 45, 45]
         ]
@@ -35,7 +35,7 @@ class Balloon {
     turnOn() {
         this.status = true;
         this.audio.play();
-        this.audio.volume = 0.5;
+        this.audio.volume = 1;
     }
 
     turnOff() {
@@ -47,19 +47,21 @@ class Balloon {
         context.drawImage(this.img, this.x, this.y, this.width, this.height);
         context.arc(this.x + 50, this.y + 130, 20, 0, 2 * Math.PI);
         context.arc(this.x + 50, this.y + 45, 45, 0, 2 * Math.PI);
+        context.fillStyle = 'rgba(255,255,255,.5)';
+        context.fill();
     }
 
     drawEnergyBar(context) {
         //Score
         context.textAlign = "left";
-        context.fillStyle = '#fff';
+        context.fillStyle = 'rgba(255,255,255,1)';
         context.font = "20px 'Press Start 2P'";
         context.fillText("Gas", 30, 45);
 
         //frame
         let energyLength = (this.energy >= 0) ? this.energy / 10 : 0;
         context.beginPath();
-        context.fillStyle = '#fff';
+        context.fillStyle = 'rgba(255,255,255,1)';
         context.fillRect(103, 23, 200, 3);
         context.fillRect(100, 26, 3, 20);
         context.fillRect(303, 26, 3, 20);

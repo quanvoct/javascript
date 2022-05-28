@@ -14,6 +14,9 @@
     <!-- ĐƯờng dẫn tương đối -->
     <img src="./images/balloon.png" alt="Khinh khí cầu" id="balloon" style="display: none;">
     <img src="./images/cloud.png" alt="Đám mây" id="cloud" style="display: none;">
+    <img src="./images/bush.png" alt="Bụi cây" id="bush" style="display: none;">
+    <img src="./images/tree.png" alt="Cây xanh" id="tree" style="display: none;">
+    <img src="./images/gas.png" alt="Nhiên liệu" id="gas" style="display: none;">
     <script src="js/Balloon.js"></script>
     <script src="js/Game.js"></script>
     <script src="js/Bush.js"></script>
@@ -23,62 +26,116 @@
         var canvas = document.getElementById('canvas'),
             imgBalloon = document.getElementById('balloon'),
             imgCloud = document.getElementById('cloud'),
+            imgBush = document.getElementById('bush'),
+            imgTree = document.getElementById('tree'),
+            imgGas = document.getElementById('gas'),
             audioBg = new Audio('./sound/game-bg.mp3'),
             audioBegin = new Audio('./sound/balloon-start.flac'),
             audioFail = new Audio('./sound/balloon-fail.mp3'),
             audioGas = new Audio('./sound/more_gas.mp3'),
-            context = canvas.getContext("2d");
-        canvas.width = window.innerWidth - 20;
-        canvas.height = window.innerHeight - 20;
-        console.log(canvas.width, canvas.height);
-        var treeCount = 15,
-            bushCount = 25,
+            audioWin = new Audio('./sound/game-win.mp3'),
+            context = canvas.getContext("2d"),
             speed = 2,
             energy = 2000,
             yBalloon = 0,
             xGame = 0,
             lossRate = 1,
-            gameScore = 0;
-        var game = new Game(audioBg, gameScore, imgCloud, treeCount, bushCount);
-        var balloon = new Balloon(yBalloon, imgBalloon, audioBegin);
-        var bush = new Bush(0, game.getBushParameter());
-        var tree = new Tree(0, game.getBushParameter(), game.getRootParameter());
+            gameScore = 0,
+            landing = false;
+        canvas.width = window.innerWidth - 20;
+        canvas.height = window.innerHeight - 20;
+        console.log(canvas.width, canvas.height);
+        var game = new Game(audioBg, gameScore, imgCloud),
+            balloon = new Balloon(yBalloon, imgBalloon, audioBegin),
+            bush = new Bush(xGame, imgBush, 125),
+            tree = new Tree(xGame, imgTree, 145);
         balloon.setEnergy(energy);
 
-        function generateTree(x) {
-            for (let i = 0; i < game.getTreeArray().length; i++) {
-                tree.drawTree(game.getTreeArray()[i] + x, context, game.getColor());
-            }
-            for (let i = 0; i < game.getBushArray().length; i++) {
-                bush.drawBush(game.getBushArray()[i] + x, context, game.getColor());
-            }
-        }
         canvas.addEventListener('mousedown', function () {
             if (balloon.getEnergyInfo() > 0) {
                 balloon.turnOn();
                 game.playGame();
+                landing = true;
             }
         });
         canvas.addEventListener('mouseup', function () {
             balloon.turnOff();
         });
+        audioWin.addEventListener('ended', function () {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        function checkCollision(balloonArray, bushArray, treeArray) {
+            //kiểm tra từng vòng tròn của balloon có va chạm với từng hình chữ nhật của bụi cây hay không
+            for (let i = 0; i < balloonArray.length; i++) {
+                for (let j = 0; j < bushArray.length; j++) {
+                    let a, b, c;
+                    a = Math.pow(balloonArray[i][0] - bushArray[j][0], 2);
+                    b = Math.pow(balloonArray[i][1] - bushArray[j][1], 2);
+                    c = balloonArray[i][2] + bushArray[j][2];
+                    console.log(balloonArray[i][0], bushArray[j][0], balloonArray[i][1], bushArray[j][1], c);
+                    if (Math.sqrt(a + b) >= c) {
+                        return false;
+                    } else {
+                        return true;
+                        break;
+                    }
+                }
+                // for (let j = 0; j < treeArray.length; j++) {
+                //     let a, b, c;
+                //     a = Math.pow(balloonArray[i][0] - treeArray[j][0], 2);
+                //     b = Math.pow(balloonArray[i][1] - treeArray[j][1], 2);
+                //     c = balloonArray[i][2] + treeArray[j][2];
+                //     if (Math.sqrt(a + b) >= c) {
+                //         return false;
+                //     } else {
+                //         return true;
+                //         break;
+                //     }
+                // }
+            }
+        }
+        document.addEventListener('keypress', function (e) {
+            if (!game.getStatus()) {
+                var keynum = e.keyCode || e.which;
+                if (keynum == 13) {
+                    speed = 2;
+                    energy = 2000;
+                    yBalloon = 0;
+                    xGame = 0;
+                    lossRate = 1;
+                    gameScore = 0;
+                    game = new Game(audioBg, gameScore, imgCloud);
+                    balloon = new Balloon(yBalloon, imgBalloon, audioBegin);
+                    bush = new Bush(xGame, imgBush, 125);
+                    tree = new Tree(xGame, imgTree, 145);
+                    audioWin.pause();
+                    audioFail.pause();
+                    landing = false;
+                    balloon.setEnergy(energy);
+                }
+            }
+        });
+
         function animateGame() {
             context.clearRect(0, 0, canvas.width, canvas.height);
             game.drawBackground(context);
             balloon.drawBalloon(context);
             balloon.drawEnergyBar(context);
-            generateTree(xGame);
+            tree.drawTree(context);
+            bush.drawBush(context);
             if (game.getStatus()) {
-                generateTree(xGame -= speed);
                 game.setScore(gameScore += speed);
-                game.setCoordinates(xGame -= speed);
+                game.setCoordinates(xGame -= speed / 2);
+                bush.setLocation(xGame -= speed / 2);
+                tree.setLocation(xGame -= speed / 2);
             }
             if (balloon.fire()) {
                 if (balloon.getEnergyInfo() <= 0) {
                     balloon.turnOff();
                 } else {
                     balloon.setCoordinates(yBalloon += speed);
-                    lossRate = (yBalloon > 350) ? 3 : (yBalloon > 220) ? 2 : 1; //Bay càng cao thì càng tốn nhiên liệu
+                    lossRate = (yBalloon > 300) ? 3 : (yBalloon > 160) ? 2 : 1; //Bay càng cao thì càng tốn nhiên liệu
                     balloon.setEnergy(energy -= speed * lossRate);
                 }
             } else {
@@ -90,15 +147,20 @@
                 }
                 balloon.setCoordinates(yBalloon -= speed);
             }
-            if (game.getStatus()) {
-                if (yBalloon <= 2) {
+            if (checkCollision(balloon.getCoordinates(), bush.getCoordinates(), tree.getCoordinates())) {
+                speed = 0;
+                game.stopGame();
+                game.drawLose(gameScore);
+                audioFail.play();
+            } else {
+                if (yBalloon <= -2 && landing == true) {
                     game.drawWin(gameScore);
-                } else {
-                    game.drawLose(gameScore);
+                    audioWin.play(1);
                 }
             }
         }
         setInterval(animateGame, 10);
+        // animateGame();
     </script>
 </body>
 
