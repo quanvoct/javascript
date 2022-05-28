@@ -51,14 +51,15 @@
             tree = new Tree(xGame, imgTree, 145);
         balloon.setEnergy(energy);
 
-        canvas.addEventListener('mousedown', function () {
+        canvas.addEventListener('touchstart mousedown', function (e) {
+            e.preventDefault();
             if (balloon.getEnergyInfo() > 0) {
                 balloon.turnOn();
                 game.playGame();
                 landing = true;
             }
         });
-        canvas.addEventListener('mouseup', function () {
+        canvas.addEventListener('touchend', function () {
             balloon.turnOff();
         });
         audioWin.addEventListener('ended', function () {
@@ -159,7 +160,12 @@
                 }
             }
         }
-        setInterval(animateGame, 10);
+        if (canvas.width < 800) {
+            document.write('<center>Hãy xoay thiết bị của bạn theo hướng ngang và tải lại trang</center>');
+            canvas.style.display = 'none';
+        } else {
+            setInterval(animateGame, 10);
+        }
         // animateGame();
     </script>
 </body>
