@@ -45,10 +45,10 @@ class Balloon {
 
     drawBalloon(context) {
         context.drawImage(this.img, this.x, this.y, this.width, this.height);
-        context.arc(this.x + 50, this.y + 130, 20, 0, 2 * Math.PI);
-        context.arc(this.x + 50, this.y + 45, 45, 0, 2 * Math.PI);
-        context.fillStyle = 'rgba(255,255,255,.5)';
-        context.fill();
+        // context.arc(this.x + 50, this.y + 130, 20, 0, 2 * Math.PI);
+        // context.arc(this.x + 50, this.y + 45, 45, 0, 2 * Math.PI);
+        // context.fillStyle = 'rgba(255,255,255,.5)';
+        // context.fill();
     }
 
     drawEnergyBar(context) {

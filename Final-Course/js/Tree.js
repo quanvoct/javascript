@@ -44,11 +44,11 @@ class Tree {
         for (let i = 0; i < this.treeArray.length; i++) {
             context.beginPath();
             context.drawImage(this.img, this.x + this.treeArray[i], this.y, this.width, this.height);
-            context.fillStyle = 'rgba(255,255,255,0.3)';
-            context.arc(this.x + 45 + this.treeArray[i], this.y + 40, 35, 0, 2 * Math.PI);
-            context.arc(this.x + 105 + this.treeArray[i], this.y + 35, 35, 0, 2 * Math.PI);
-            context.arc(this.x + 15 + this.treeArray[i], this.y + 85, 15, 0, 2 * Math.PI);
-            context.fill();
+            // context.fillStyle = 'rgba(255,255,255,0.3)';
+            // context.arc(this.x + 45 + this.treeArray[i], this.y + 40, 35, 0, 2 * Math.PI);
+            // context.arc(this.x + 105 + this.treeArray[i], this.y + 35, 35, 0, 2 * Math.PI);
+            // context.arc(this.x + 15 + this.treeArray[i], this.y + 85, 15, 0, 2 * Math.PI);
+            // context.fill();
         }
     }
 }
