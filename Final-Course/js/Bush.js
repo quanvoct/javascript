@@ -32,9 +32,9 @@ class Bush {
         for (let i = 0; i < this.bushArray.length; i++) {
             context.beginPath();
             context.drawImage(this.img, this.x + this.bushArray[i], this.y, this.width, this.height);
-            // context.arc(this.x + 30 + this.bushArray[i], this.y + 25, 25, 0, 2 * Math.PI);
-            // context.fillStyle = 'rgba(255,255,255,0.3)';
-            // context.fill();
+            context.arc(this.x + 30 + this.bushArray[i], this.y + 25, 25, 0, 2 * Math.PI);
+            context.fillStyle = 'rgba(255,255,255,0.3)';
+            context.fill();
         }
     }
 }
