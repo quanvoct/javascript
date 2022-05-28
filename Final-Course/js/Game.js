@@ -1,5 +1,5 @@
 class Game {
-    constructor(audio, score, img) {
+    constructor(score, audioBg, audioWin, audioFail) {
         this.x = 0;
         this.status = false;
         this.color = [
@@ -14,8 +14,9 @@ class Game {
         this.randoma = Math.floor(Math.random() * 200 - 100);
         this.randomb = Math.floor(Math.random() * 400 - 100);
         this.score = score;
-        this.img = img;
-        this.audio = audio;
+        this.audioBg = audioBg;
+        this.audioWin = audioWin;
+        this.audioFail = audioFail;
     }
     setScore(score) {
         this.score = score;
@@ -31,11 +32,11 @@ class Game {
     }
     playGame() {
         this.status = true;
-        this.audio.play();
+        this.audioBg.play();
     }
-    stopGame() {
+    stopGame(boolean) {
         this.status = false;
-        this.audio.pause();
+        this.audioBg.pause();
     }
     drawBackground(context) {
         let h1 = 0, h2 = 0, h3 = 0, detail = 2, x = this.x;
@@ -76,12 +77,6 @@ class Game {
             context.fillStyle = this.color[6];
             context.fillRect(i * detail * 10 + x, canvas.height - 70 + 10 * h2, detail * 10, 20 + 10 * h2);
 
-            //Score
-            context.textAlign = "left";
-            context.fillStyle = '#fff';
-            context.font = "20px 'Press Start 2P'";
-            context.fillText("Score", canvas.width - 200, 45);
-            context.fillText(this.score, canvas.width - 90, 45);
             if (i % 400 == 0) {
                 let x = i;
                 let y = canvas.height / 10;
@@ -89,7 +84,7 @@ class Game {
             }
         }
     }
-    drawWin(score) {
+    drawWin() {
         //Win
         context.fillStyle = '#fff';
         context.textAlign = "center";
@@ -98,9 +93,17 @@ class Game {
         context.fillText("Your flight is long:", canvas.width / 2, canvas.height / 2 - 50);
         context.font = "30px 'Press Start 2P'";
         context.fillStyle = '#ffff00';
-        context.fillText(score + " miles", canvas.width / 2, canvas.height / 2);
+        context.fillText(this.score + " miles", canvas.width / 2, canvas.height / 2);
+        this.audioWin.play();
     }
-    drawLose(score) {
+    drawScore() {
+        //Score
+        context.textAlign = "left";
+        context.fillStyle = '#fff';
+        context.font = "20px 'Press Start 2P'";
+        context.fillText("Score " + this.score, canvas.width - 200, 45);
+    }
+    drawLose() {
         //Lose
         context.fillStyle = this.color[5];
         context.textAlign = "center";
@@ -109,8 +112,22 @@ class Game {
         context.fillText("You have an accident at:", canvas.width / 2, canvas.height / 2 - 100);
         context.font = "30px 'Press Start 2P'";
         context.fillStyle = '#ffff00';
-        context.fillText(score + " miles", canvas.width / 2, canvas.height / 2-50);
+        context.fillText(this.score + " miles", canvas.width / 2, canvas.height / 2 - 50);
         context.font = "15px 'Press Start 2P'";
         context.fillText("Press ENTER to retry", canvas.width / 2, canvas.height / 2);
+        this.audioFail.play()
+    }
+    drawBegin() {
+        //Win
+        context.fillStyle = '#fff';
+        context.textAlign = "center";
+        context.font = "20px 'Press Start 2P'";
+        context.fillText("HELLO WORLD!!!", canvas.width / 2, canvas.height / 2 - 100);
+        context.fillText("Welcome to our journey today. You are going to the captain of this flight.", canvas.width / 2, canvas.height / 2 - 70);
+        context.fillText("Let's drive the balloon over the forest and land safely.", canvas.width / 2, canvas.height / 2 -40);
+        context.fillText("The farther your flight, the higher your score", canvas.width / 2, canvas.height / 2 -10);
+        
+        context.fillStyle = '#ffff00';
+        context.fillText("Press ENTER to begin. Click on the sky to begin the flight.", canvas.width / 2, canvas.height / 2 + 30);
     }
 }
