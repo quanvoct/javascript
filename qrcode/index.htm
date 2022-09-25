@@ -21,10 +21,12 @@
 
 			<div class="input-group mb-3">
 				<span class="input-group-text">Copy link trang web vào đây</span>
-				<input type="text" class="form-control" name="url" id="url" value="toilaquan.com"
+				<input type="text" class="form-control" name="url" id="url" placeholder="toilaquan.com"
 					onkeyup="onReady(this)" />
 			</div>
-			<div id="id_qrcode" class="text-center"></div>
+			<div style="width: 100%; text-align: center;">
+				<div id="id_qrcode" style="display: inline-block"></div>
+			</div>
 			<p class="mt-5 text-center">Được phát triển bởi Võ Minh Quân</p>
 </body>
 <script type="text/javascript" src="qrcode.min.js"></script>
@@ -35,7 +37,7 @@
 			text: obj.value,
 			width: 150,
 			height: 150,
-			colorDark: "#000000",
+			colorDark: "#0089ff",
 			colorLight: "#ffffff",
 			correctLevel: QRCode.CorrectLevel.L
 		});
