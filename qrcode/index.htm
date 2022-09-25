@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body onload=onReady()>
+	<h1>Chuyển URL sang QRCode</h1>
+	<input type="text" name="url" id="url" onkeyup="onReady(this)">
+	<p>
+		<div id="id_qrcode"></div>
+	</p>
+	</body>
+		<script type="text/javascript" src="qrcode.min.js"></script>
+		<script type="text/javascript">
+		function onReady(obj)
+		{
+			document.getElementById('id_qrcode').innerHTML = '';
+			var qrcode = new QRCode("id_qrcode", {
+				text: obj.value,
+				width:150,
+				height:150,
+				colorDark:"#000000",
+				colorLight:"#ffffff",
+				correctLevel:QRCode.CorrectLevel.L
+			});
+		}
+		</script>
+</html>
