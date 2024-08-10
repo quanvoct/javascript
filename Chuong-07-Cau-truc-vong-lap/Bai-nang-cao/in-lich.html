@@ -49,7 +49,7 @@
         var bai4 = '<div class="col py-10">',
         year = parseInt(prompt('Nhập năm bạn muốn in lịch'), 0),
         dayName = ['T.Hai', 'T.Ba', 'T.Tư', 'T.Năm', 'T.Sáu', 'T.Bảy', 'C.Nhật'];
-    if (!isNaN(year) && year > 1970) {
+    if (!isNaN(year) && year >= 1970) {
       for (let i = 1; i <= 12; i++) {
         bai4 += '<div class="month">';
         bai4 += '<div class="text-center py-10" style="width: 100%; border-bottom: 1px solid #999;"><strong> THÁNG ' + i + '/' + year + '</strong></div>';
