@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Khoảng Trắng - Title Animation</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .test-title {
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .info {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .spacer {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="test-section">
+            <h1 class="test-title" id="title1">Key Digital sẽ giúp bạn tạo kết nối gần gũi</h1>
+            <div class="controls">
+                <button onclick="testReverse()">Test Reverse (Tập hợp lại)</button>
+                <button onclick="testNormal()">Test Normal (Lan tỏa)</button>
+                <button onclick="resetAll()">Reset</button>
+            </div>
+            <div class="info">
+                <strong>Reverse Mode:</strong> Chữ bắt đầu lan tỏa, khi click sẽ tập hợp lại với khoảng trắng đầy đủ.<br>
+                <strong>Normal Mode:</strong> Chữ bắt đầu bình thường, khi click sẽ lan tỏa ra.
+            </div>
+        </div>
+
+        <div class="spacer">
+            Cuộn xuống để test scroll trigger
+        </div>
+
+        <div class="test-section">
+            <h1 class="test-title" id="title2">Welcome to our amazing website</h1>
+            <div class="info">
+                Scroll trigger - Reverse mode. Chữ sẽ tập hợp lại khi scroll đến đây.
+            </div>
+        </div>
+
+        <div class="spacer">
+            Cuộn xuống để test scroll trigger
+        </div>
+
+        <div class="test-section">
+            <h1 class="test-title" id="title3">Chào mừng bạn đến với website</h1>
+            <div class="info">
+                Scroll trigger - Normal mode. Chữ sẽ lan tỏa khi scroll đến đây.
+            </div>
+        </div>
+    </div>
+
+    <script src="title-animation.js"></script>
+    <script>
+        let title1, title2, title3;
+
+        function initAnimations() {
+            // Title 1 - Manual control
+            title1 = new TitleAnimation('#title1', {
+                trigger: 'load',
+                reverse: true,
+                duration: 1.2,
+                spreadX: 200,
+                spreadY: 60
+            });
+
+            // Title 2 - Scroll trigger, Reverse mode
+            title2 = new TitleAnimation('#title2', {
+                trigger: 'scroll',
+                reverse: true,
+                duration: 1.5,
+                spreadX: 250,
+                spreadY: 80
+            });
+
+            // Title 3 - Scroll trigger, Normal mode
+            title3 = new TitleAnimation('#title3', {
+                trigger: 'scroll',
+                reverse: false,
+                duration: 1.2,
+                spreadX: 200,
+                spreadY: 60
+            });
+        }
+
+        function testReverse() {
+            if (title1) {
+                title1.animate();
+            }
+        }
+
+        function testNormal() {
+            if (title1) {
+                title1.animateSpread();
+            }
+        }
+
+        function resetAll() {
+            if (title1) title1.reset();
+            if (title2) title2.reset();
+            if (title3) title3.reset();
+        }
+
+        // Khởi tạo khi trang load
+        document.addEventListener('DOMContentLoaded', initAnimations);
+    </script>
+</body>
+</html> 

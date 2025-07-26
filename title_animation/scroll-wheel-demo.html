@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Wheel Trigger Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+        }
+
+        .spacer {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .title {
+            color: white;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+
+        .info {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 1.1rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .controls {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="spacer">
+        Cuộn xuống để xem hiệu ứng scroll wheel trigger
+    </div>
+
+    <div class="section">
+        <h1 class="title" id="title1">Key Digital sẽ giúp bạn tạo kết nối gần gũi</h1>
+        <div class="info">
+            <strong>Scroll Wheel Trigger - Reverse Mode:</strong><br>
+            Cuộn chuột để xem animation theo vị trí scroll. Chữ sẽ tập hợp lại khi cuộn xuống và lan tỏa khi cuộn lên.
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress1"></div>
+        </div>
+        <div class="controls">
+            <button onclick="resetAnimation(1)">Reset</button>
+            <button onclick="toggleScrollWheel(1)">Toggle Scroll Wheel</button>
+        </div>
+    </div>
+
+    <div class="spacer">
+        Cuộn xuống để xem hiệu ứng tiếp theo
+    </div>
+
+    <div class="section">
+        <h1 class="title" id="title2">Welcome to our amazing website</h1>
+        <div class="info">
+            <strong>Scroll Wheel Trigger - Normal Mode:</strong><br>
+            Cuộn chuột để xem animation theo vị trí scroll. Chữ sẽ lan tỏa khi cuộn xuống và tập hợp khi cuộn lên.
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress2"></div>
+        </div>
+        <div class="controls">
+            <button onclick="resetAnimation(2)">Reset</button>
+            <button onclick="toggleScrollWheel(2)">Toggle Scroll Wheel</button>
+        </div>
+    </div>
+
+    <div class="spacer">
+        Cuộn xuống để xem hiệu ứng tiếp theo
+    </div>
+
+    <div class="section">
+        <h1 class="title" id="title3">Chào mừng bạn đến với website tuyệt vời</h1>
+        <div class="info">
+            <strong>Scroll Wheel Trigger - Custom Settings:</strong><br>
+            Hiệu ứng với cài đặt tùy chỉnh cho spread và rotation.
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress3"></div>
+        </div>
+        <div class="controls">
+            <button onclick="resetAnimation(3)">Reset</button>
+            <button onclick="toggleScrollWheel(3)">Toggle Scroll Wheel</button>
+        </div>
+    </div>
+
+    <script src="title-animation.js"></script>
+    <script>
+        let animations = {};
+
+        function initAnimations() {
+            // Title 1 - Reverse mode với scroll wheel trigger
+            animations[1] = new TitleAnimation('#title1', {
+                trigger: 'scrollWheel',
+                reverse: true,
+                duration: 1.2,
+                spreadX: 200,
+                spreadY: 60
+            });
+
+            // Title 2 - Normal mode với scroll wheel trigger
+            animations[2] = new TitleAnimation('#title2', {
+                trigger: 'scrollWheel',
+                reverse: false,
+                duration: 1.5,
+                spreadX: 250,
+                spreadY: 80
+            });
+
+            // Title 3 - Custom settings với scroll wheel trigger
+            animations[3] = new TitleAnimation('#title3', {
+                trigger: 'scrollWheel',
+                reverse: true,
+                duration: 2.0,
+                spreadX: 300,
+                spreadY: 100,
+                rotationY: -360,
+                rotationZ: 15
+            });
+
+            // Theo dõi progress
+            updateProgress();
+        }
+
+        function resetAnimation(id) {
+            if (animations[id]) {
+                animations[id].reset();
+            }
+        }
+
+        function toggleScrollWheel(id) {
+            if (animations[id]) {
+                if (animations[id].scrollWheelHandler) {
+                    animations[id].stopScrollWheelTrigger();
+                } else {
+                    animations[id].initScrollWheelTrigger();
+                }
+            }
+        }
+
+        function updateProgress() {
+            // Cập nhật progress bar dựa trên vị trí scroll
+            const updateProgressBar = () => {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                
+                const progress1 = Math.max(0, Math.min(1, (scrollY - windowHeight) / (documentHeight - 2 * windowHeight)));
+                const progress2 = Math.max(0, Math.min(1, (scrollY - 2 * windowHeight) / (documentHeight - 3 * windowHeight)));
+                const progress3 = Math.max(0, Math.min(1, (scrollY - 3 * windowHeight) / (documentHeight - 4 * windowHeight)));
+                
+                document.getElementById('progress1').style.width = (progress1 * 100) + '%';
+                document.getElementById('progress2').style.width = (progress2 * 100) + '%';
+                document.getElementById('progress3').style.width = (progress3 * 100) + '%';
+            };
+            
+            window.addEventListener('scroll', updateProgressBar, { passive: true });
+            updateProgressBar(); // Cập nhật lần đầu
+        }
+
+        // Khởi tạo khi trang load
+        document.addEventListener('DOMContentLoaded', initAnimations);
+    </script>
+</body>
+</html> 
